@@ -29,10 +29,8 @@ public class QuantumMonte {
         try {
             dataManager.openOutputFile("something.dat");			
             
-            for (int j = 0; j < 5000; ++j) {
-                
-                doMeasurement(dataManager, j);
-                
+            for (int j = 0; j < 5000; ++j) {               
+                doMeasurement(dataManager, j);               
                 advance(100);	
             }
             dataManager.close();
@@ -50,7 +48,7 @@ public class QuantumMonte {
             int w = (z+1) % sliceCount;
             double xold = path.getPosition(z);
             double xnew = xold + delta * (2*rand.nextDouble() - 1);
-//                    double xnew = path.getPosition(z) + delta*rand.nextGaussian();
+//          double xnew = xold + delta*rand.nextGaussian();
             double xnext = path.getPosition(w);
             double xprev = path.getPosition(u);
             double deltaS = 0;
@@ -67,8 +65,7 @@ public class QuantumMonte {
     }
 
 
-    private void doMeasurement(DataManager dataManager, int j)
-            throws IOException {
+    private void doMeasurement(DataManager dataManager, int j) throws IOException {
         double sum = 0;
         double sumxsquared = 0;
         
@@ -87,7 +84,6 @@ public class QuantumMonte {
         dataManager.writeData(j,avgx,xsquared,E);
     }
 
-
     public static void main(String[] args){
 		
 		double kT = 0.5;
@@ -100,12 +96,10 @@ public class QuantumMonte {
         DataManager dataManager = new DataManager();
 
         Random rand = new Random();
-
+    	
 		QuantumMonte qmc = new QuantumMonte(path, action, rand);
 	
 		qmc.run(dataManager);
 	}
-
-
 
 }
