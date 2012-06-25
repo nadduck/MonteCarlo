@@ -11,6 +11,8 @@ public class DataManager {
     public void openOutputFile(String filename) throws IOException {
         fstream = new FileWriter(filename);
         out = new BufferedWriter(fstream);
+        out.write("# index x x2 E");
+        out.newLine();
     }
     
     public void writeData(int j, double avgx, double xsquared, double E)

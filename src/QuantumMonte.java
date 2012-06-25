@@ -4,66 +4,31 @@ import java.util.Random;
 public class QuantumMonte {
     
     private Path path;
-    private Action action;
 
     private double deltaTau;
     private int sliceCount;
 
-    private double delta;
-    private Random rand;    
+    private Advancer advancer;    
     
     
-    QuantumMonte(Path path, Action action, Random rand) {
+    QuantumMonte(Path path, Advancer advancer) {
         this.path = path;
-        this.action = action;
-        this.rand = rand;
+        this.advancer = advancer;
 
         sliceCount = path.getSliceCount();
         deltaTau = path.getDeltaTau();
-
-        delta = 0.5;
     }
 
 
-    private void run(DataManager dataManager) {
-        try {
-            dataManager.openOutputFile("something.dat");			
-            
-            for (int j = 0; j < 5000; ++j) {               
-                doMeasurement(dataManager, j);               
-                advance(100);	
-            }
-            dataManager.close();
+    private void run(DataManager dataManager) throws IOException {
+        dataManager.openOutputFile("something.dat");
+
+        for (int j = 0; j < 5000; ++j) {
+            doMeasurement(dataManager, j);
+            advancer.advance(100);
         }
-        catch (Exception e) {
-            System.err.println("You broke something: " + e.getMessage());
-        }
+        dataManager.close();
     }
-
-
-    private void advance(int nstep) {
-        for (int step = 0; step < nstep; step++){
-            int z = rand.nextInt(sliceCount);
-            int u = ((z-1)+sliceCount) % sliceCount;
-            int w = (z+1) % sliceCount;
-            double xold = path.getPosition(z);
-            double xnew = xold + delta * (2*rand.nextDouble() - 1);
-//          double xnew = xold + delta*rand.nextGaussian();
-            double xnext = path.getPosition(w);
-            double xprev = path.getPosition(u);
-            double deltaS = 0;
-            deltaS += action.calculateKinetic(xnew, xprev);
-            deltaS += action.calculateKinetic(xnew, xnext);
-            deltaS += action.calculatePotential(xnew);
-            deltaS -= action.calculateKinetic(xold, xprev); 
-            deltaS -= action.calculateKinetic(xold, xnext);
-            deltaS -= action.calculatePotential(xold);
-            if (rand.nextDouble() < Math.exp(-deltaS)) {
-                path.setPosition(z, xnew);
-            }		
-        }
-    }
-
 
     private void doMeasurement(DataManager dataManager, int j) throws IOException {
         double sum = 0;
@@ -84,7 +49,7 @@ public class QuantumMonte {
         dataManager.writeData(j,avgx,xsquared,E);
     }
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
 		
 		double kT = 0.5;
         int sliceCount = 10;
@@ -95,9 +60,17 @@ public class QuantumMonte {
         
         DataManager dataManager = new DataManager();
 
-        Random rand = new Random();
+        Random rand = new Random(2012L);
+        
+        double delta = 1.0;
+        Mover mover = new UniformMover(rand, delta );
+        
+        double mass = 1.0;
+        mover = new GaussianMover(rand, deltaTau, mass );
+        
+        Advancer advancer = new Advancer(path, action, mover, rand);
     	
-		QuantumMonte qmc = new QuantumMonte(path, action, rand);
+		QuantumMonte qmc = new QuantumMonte(path, advancer);
 	
 		qmc.run(dataManager);
 	}
