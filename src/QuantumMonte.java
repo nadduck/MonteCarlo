@@ -3,7 +3,9 @@ import java.util.Random;
 
 public class QuantumMonte {
     
-    private Path path;
+    private double mass;
+
+	private Path path;
 
     private double deltaTau;
     private int sliceCount;
@@ -11,12 +13,13 @@ public class QuantumMonte {
     private Advancer advancer;    
     
     
-    QuantumMonte(Path path, Advancer advancer) {
+    QuantumMonte(Path path, Advancer advancer, double mass) {
         this.path = path;
         this.advancer = advancer;
 
         sliceCount = path.getSliceCount();
         deltaTau = path.getDeltaTau();
+        this.mass = mass;
     }
 
 
@@ -43,8 +46,8 @@ public class QuantumMonte {
         double avgx = sum/sliceCount;
         double x = path.getPosition(0);
         double xsquared = x*x;
-        double V = 0.5 * avgx * avgx;
-        double T = 0.5 * (sumxsquared/sliceCount)/(deltaTau *deltaTau);
+        double V = 0.5 * mass * avgx * avgx;
+        double T = 0.5 * mass * (sumxsquared/sliceCount)/(deltaTau *deltaTau);
         double E = 1/(2*deltaTau) - T + V;
         dataManager.writeData(j,avgx,xsquared,E);
     }
@@ -56,21 +59,23 @@ public class QuantumMonte {
         Path path = new Path(sliceCount, kT);
         
         double deltaTau = path.getDeltaTau();
-        Action action = new Action(deltaTau);
+        
+        double mass = 1.0;
+        Action action = new Action(deltaTau, mass);
         
         DataManager dataManager = new DataManager();
 
         Random rand = new Random(2012L);
         
         double delta = 1.0;
-        Mover mover = new UniformMover(rand, delta );
+        Mover mover = new UniformMover(rand, delta);
         
-        double mass = 1.0;
-        mover = new GaussianMover(rand, deltaTau, mass );
+        
+        mover = new GaussianMover(rand, deltaTau, mass);
         
         Advancer advancer = new Advancer(path, action, mover, rand);
     	
-		QuantumMonte qmc = new QuantumMonte(path, advancer);
+		QuantumMonte qmc = new QuantumMonte(path, advancer, mass);
 	
 		qmc.run(dataManager);
 	}

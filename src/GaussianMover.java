@@ -18,15 +18,15 @@ public class GaussianMover implements Mover {
         double xmid = segment.getMidpoint();
         double xnew = xmid + sigma * rand.nextGaussian();
         
-        tranProb = calculateTransitonProbability(xmid, xnew);
+        tranProb = calculateTransitionProbability(xmid, xnew);
         
         double xold = segment.x;
-        tranProb /= calculateTransitonProbability(xmid, xold);
+        tranProb /= calculateTransitionProbability(xmid, xold);
         
         return xnew;
     }
 
-    private double calculateTransitonProbability(double xmid, double xnew) {
+    private double calculateTransitionProbability(double xmid, double xnew) {
         double x2 = (xnew - xmid) * (xnew - xmid);
         return Math.exp(-0.5 * x2  / sigma2);
     }
