@@ -25,8 +25,8 @@ public class GaussianMoverTest {
         rand = new Random(42L);
         randCopy = new Random(42L);
         mover = new GaussianMover(rand, deltaTau, mass);
-        segment = new PathSegment();
-        segment.xnext = 1.0;
+        segment = new PathSegment(0,0,0);
+        segment.setNext(1.0);
         sigma2 = 0.5 * deltaTau / mass;
         sigma = Math.sqrt(sigma2);
     }
@@ -41,7 +41,7 @@ public class GaussianMoverTest {
 
     @Test
     public void testTransitionProbability() {
-        double xold = segment.x;
+        double xold = segment.getX();
         double xnew = mover.sampleNewPosition(segment);
         double xmid = segment.getMidpoint();
         double deltaXNew2 = (xnew - xmid) * (xnew - xmid);

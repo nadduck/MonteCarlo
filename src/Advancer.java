@@ -41,21 +41,22 @@ public class Advancer {
         int prevSlice = ((slice - 1) + sliceCount) % sliceCount;
         int nextSlice = (slice + 1) % sliceCount;
         
-        PathSegment segment = new PathSegment();
-        segment.xnext = path.getPosition(nextSlice);
-        segment.xprev = path.getPosition(prevSlice);
-        segment.x = path.getPosition(slice);
+        double xnext = path.getPosition(nextSlice);
+        double xprev = path.getPosition(prevSlice);
+        double x = path.getPosition(slice);
+        
+        PathSegment segment = new PathSegment(xprev, x, xnext);
         return segment;
     }
 
     private double calculateActionDifference(PathSegment segment, double xnew) {
         double deltaS = 0;
-        deltaS += action.calculateKinetic(xnew, segment.xprev);
-        deltaS += action.calculateKinetic(xnew, segment.xnext);
+        deltaS += action.calculateKinetic(xnew, segment.getPrev());
+        deltaS += action.calculateKinetic(xnew, segment.getNext());
         deltaS += action.calculatePotential(xnew);
-        deltaS -= action.calculateKinetic(segment.x, segment.xprev);
-        deltaS -= action.calculateKinetic(segment.x, segment.xnext);
-        deltaS -= action.calculatePotential(segment.x);
+        deltaS -= action.calculateKinetic(segment.getX(), segment.getPrev());
+        deltaS -= action.calculateKinetic(segment.getX(), segment.getNext());
+        deltaS -= action.calculatePotential(segment.getX());
         return deltaS;
     }
 

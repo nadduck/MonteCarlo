@@ -23,13 +23,13 @@ public class ActionTest {
 	
 	@Test
 	public void testCalculateKinetic() {
-		double expect = 0.5 * (xold-xprev)*(xold-xprev) / deltaTau;
+		double expect = 0.5 * mass * (xold-xprev)*(xold-xprev) / deltaTau;
 		double kineticAction = action.calculateKinetic(xold, xprev);
 		assertEquals(expect,kineticAction,1e-14);
 	}
 	
 	public void testCalculatePotential() {
-		double expect = 0.5 *  deltaTau * xold * xold;
+		double expect = 0.5 * mass * deltaTau * xold * xold;
 		double potentialAction = action.calculatePotential(xold);
 		assertEquals(expect,potentialAction,1e-14);		
 	}

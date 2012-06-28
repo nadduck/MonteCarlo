@@ -20,7 +20,7 @@ public class GaussianMover implements Mover {
         
         tranProb = calculateTransitionProbability(xmid, xnew);
         
-        double xold = segment.x;
+        double xold = segment.getX();
         tranProb /= calculateTransitionProbability(xmid, xold);
         
         return xnew;
