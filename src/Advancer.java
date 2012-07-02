@@ -35,8 +35,6 @@ public class Advancer {
         }
     }
 
-
-
     private PathSegment getOldSegment(int slice) {
         int prevSlice = ((slice - 1) + sliceCount) % sliceCount;
         int nextSlice = (slice + 1) % sliceCount;

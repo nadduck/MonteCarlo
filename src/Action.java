@@ -14,8 +14,9 @@ public class Action {
         return 0.5 * mass * (xold-xprev)*(xold-xprev) / deltaTau;
     }
 
-
     public double calculatePotential(double xold) {
         return 0.5 * mass * deltaTau * xold * xold;
     }
+    
+    
 }
