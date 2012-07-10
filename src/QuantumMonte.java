@@ -30,7 +30,7 @@ public class QuantumMonte {
         
         double deltaTau = path.getDeltaTau();        
         double mass = 1.0;
-        Action action = new Action(deltaTau, mass);
+        Action action = new PrimitiveAction(deltaTau, mass);
 
         Random rand = new Random(2012L);        
         double delta = 1.0;

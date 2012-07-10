@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class ActionTest {
+public class PrimitiveActionTest {
 
 	private double deltaTau;
 	private double xold;
@@ -18,7 +18,7 @@ public class ActionTest {
 		mass = 1.0;
 		xold = 0.5;
 		xprev = 0.3;
-		action = new Action(deltaTau, mass);
+		action = new PrimitiveAction(deltaTau, mass);
 	}
 	
 	@Test
