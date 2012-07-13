@@ -24,7 +24,7 @@ public class KEEstimatorTest {
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
 		action = new PrimitiveAction(deltaTau, mass);
-		kinetic = new KineticEnergyEstimator(path, action);
+		kinetic = new KineticEnergyEstimator(path, action, mass);
 	}
 	
 	@Test
@@ -33,9 +33,10 @@ public class KEEstimatorTest {
 		for(int i = 0; i < sliceCount; i++) {
 			double x = path.getPosition(i);
 			double xnext = path.getPosition((i+1)%sliceCount);
-			expect += action.calculateKinetic(xnext, x) / deltaTau;
+			expect -= 0.5 * mass * (xnext-x)*(xnext-x) / (deltaTau*deltaTau);
 		}
 		expect /= sliceCount;
+		expect += 1/(2*deltaTau);
 		double kineticEnergy = kinetic.getValue();
 		assertEquals(expect, kineticEnergy,1e-14);
 		

@@ -36,9 +36,9 @@ public class QuantumMonte {
         double delta = 1.0;
         Mover mover = new UniformMover(rand, delta);
         
-        Estimator potential = new PotentialEnergyEstimator(path, action);
-		Estimator kinetic = new KineticEnergyEstimator(path, action);
-		Estimator total = new TotalEnergyEstimator(potential, kinetic, deltaTau);
+        Estimator potential = new PotentialEnergyEstimator(path, action, mass);
+		Estimator kinetic = new KineticEnergyEstimator(path, action, mass);
+		Estimator total = new TotalEnergyEstimator(potential, kinetic);
 		
         Measurer measurer = new Measurer(path, total);
         

@@ -22,15 +22,16 @@ public class PrimitiveActionTest {
 	}
 	
 	@Test
-	public void testCalculateKinetic() {
-		double expect = 0.5 * mass * (xold-xprev)*(xold-xprev) / deltaTau;
-		double kineticAction = action.calculateKinetic(xold, xprev);
+	public void testMassDerivative() {
+		double expect = 0.25 * deltaTau *(xold*xold + xprev*xprev);
+		double kineticAction = action.getMassDerivative(xold, xprev);
 		assertEquals(expect,kineticAction,1e-14);
 	}
 	
-	public void testCalculatePotential() {
-		double expect = 0.5 * mass * deltaTau * xold * xold;
-		double potentialAction = action.calculatePotential(xold);
+	@Test
+	public void testDeltaTauDerivative() {
+		double expect = 0.25 * mass * (xold*xold + xprev*xprev);
+		double potentialAction = action.getDeltaTauDerivative(xold, xprev);
 		assertEquals(expect,potentialAction,1e-14);		
 	}
 

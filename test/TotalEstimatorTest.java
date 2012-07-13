@@ -25,13 +25,31 @@ public class TotalEstimatorTest {
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
 		action = new PrimitiveAction(deltaTau, mass);
-		kinetic = new KineticEnergyEstimator(path, action);
-		potential = new PotentialEnergyEstimator(path, action);		
-		total = new TotalEnergyEstimator(potential, kinetic, deltaTau);
+		kinetic = new KineticEnergyEstimator(path, action, mass);
+		potential = new PotentialEnergyEstimator(path, action, mass);		
+		total = new TotalEnergyEstimator(potential, kinetic);
 	}
 	@Test
 	public void testGetValue() {
-		double expect = 1/(2*deltaTau) - kinetic.getValue() + potential.getValue();
+		double kineticexpect = 0;
+		for(int i = 0; i < sliceCount; i++) {
+			double x = path.getPosition(i);
+			double xnext = path.getPosition((i+1)%sliceCount);
+			kineticexpect -= 0.5 * mass * (xnext-x)*(xnext-x) / (deltaTau*deltaTau);
+		}
+		kineticexpect /= sliceCount;
+		kineticexpect += 1/(2*deltaTau);
+		
+		double avgx = 0;
+    	for (int i = 0; i < sliceCount; i++) {
+            double x = path.getPosition(i);
+            avgx += x;
+        }
+    	avgx /= sliceCount;
+		double potentialexpect = 0.5 * mass * avgx * avgx;
+		
+		double expect = potentialexpect + kineticexpect;
+		
 		double totalEnergy = total.getValue();
 		assertEquals(expect,totalEnergy,1e-14);
 	}

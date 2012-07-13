@@ -25,7 +25,7 @@ public class Advancer {
             double xnew = mover.sampleNewPosition(segment);
             double tprob = mover.getLastTransitionProbability();
             
-            double deltaS = calculateActionDifference(segment, xnew);
+            double deltaS = action.getActionDifference(segment, xnew);
             
             double acceptanceProbability = Math.exp(-deltaS) / tprob;
             
@@ -45,17 +45,6 @@ public class Advancer {
         
         PathSegment segment = new PathSegment(xprev, x, xnext);
         return segment;
-    }
-
-    private double calculateActionDifference(PathSegment segment, double xnew) {
-        double deltaS = 0;
-        deltaS += action.calculateKinetic(xnew, segment.getPrev());
-        deltaS += action.calculateKinetic(xnew, segment.getNext());
-        deltaS += action.calculatePotential(xnew);
-        deltaS -= action.calculateKinetic(segment.getX(), segment.getPrev());
-        deltaS -= action.calculateKinetic(segment.getX(), segment.getNext());
-        deltaS -= action.calculatePotential(segment.getX());
-        return deltaS;
     }
 
     private int chooseRandomSlice() {

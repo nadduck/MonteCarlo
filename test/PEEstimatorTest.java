@@ -23,7 +23,7 @@ public class PEEstimatorTest {
 		path.setPosition(2,0.5);
 		deltaTau = path.getDeltaTau();
 		action = new PrimitiveAction(deltaTau, mass);
-		potential = new PotentialEnergyEstimator(path, action);
+		potential = new PotentialEnergyEstimator(path, action, mass);
 	}
 	@Test
 	public void testGetValue() {
@@ -33,7 +33,7 @@ public class PEEstimatorTest {
             avgx += x;
         }
     	avgx /= sliceCount;
-		double expect = action.calculatePotential(avgx) / deltaTau;
+		double expect = 0.5 * mass * avgx * avgx;
 		double potentialEnergy = potential.getValue();
 		assertEquals(expect,potentialEnergy,1e-14);
 	}
