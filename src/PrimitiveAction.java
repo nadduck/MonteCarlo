@@ -11,12 +11,18 @@ public class PrimitiveAction implements Action{
 
 	@Override
 	public double getMassDerivative(double xold, double xprev) {
-		return 0.25 * deltaTau *(xold*xold + xprev*xprev);
+		double dSdm = -1/(2*mass); 
+		dSdm += 0.5 * (xold - xprev)*(xold - xprev) / deltaTau;
+		dSdm += 0.25 * deltaTau *(xold*xold + xprev*xprev);
+		return dSdm;
 	}
 
 	@Override
 	public double getDeltaTauDerivative(double xold, double xprev) {
-		return 0.25 * mass * (xold*xold + xprev*xprev);
+		double dSdtau = 1/(2*deltaTau);
+		dSdtau -= 0.5 * mass * (xold - xprev)*(xold - xprev) / (deltaTau * deltaTau);
+		dSdtau += 0.25 * mass * (xold*xold + xprev*xprev);
+		return dSdtau;
 	}
 
 	@Override
@@ -31,13 +37,11 @@ public class PrimitiveAction implements Action{
         return deltaS;
 	}
 
-	@Override
-	public double getKinetic(double xold, double xprev) {
+	private double getKinetic(double xold, double xprev) {
 		return 0.5 * mass * (xold-xprev)*(xold-xprev) / deltaTau;
 	}
 	
-	@Override
-	public double getPotential(double xold) {
+	private double getPotential(double xold) {
         return 0.5 * mass * deltaTau * xold * xold;
     }
     
