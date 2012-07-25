@@ -24,13 +24,14 @@ public class QuantumMonte {
 
 
     public static void main(String[] args) throws IOException {
-		double kT = 0.5;
-        int sliceCount = 10;
+        SimulationInfo simulationInfo = new SimulationInfo();
+		double kT = simulationInfo.getkT();
+        int sliceCount = simulationInfo.getSliceCount();
         Path path = new Path(sliceCount, kT);
         
         double deltaTau = path.getDeltaTau();        
-        double mass = 1.0;
-        double angfreq = 1.0;
+        double mass = simulationInfo.getMass();
+        double angfreq = simulationInfo.getAngfreq();
         Action action = new PrimitiveAction(deltaTau, mass);
         action = new ExactSHOAction(deltaTau, mass, angfreq);
 
