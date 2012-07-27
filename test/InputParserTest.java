@@ -49,37 +49,25 @@ public class InputParserTest {
 		Element rootElement = doc.createElement("MonteCarlo");
 		doc.appendChild(rootElement);
 		
-		Element temperature = doc.createElement("Temperature");
-		Element path = doc.createElement("Path");
-		Element oscillator = doc.createElement("Oscillator");
-		Element mass = doc.createElement("Mass");
-		
-		rootElement.appendChild(temperature);
-		rootElement.appendChild(path);
-		rootElement.appendChild(oscillator);
-		rootElement.appendChild(mass);
-		
-		Attr tempAttr = doc.createAttribute("value");
-		Attr pathAttr = doc.createAttribute("sliceCount");
-		Attr oscAttr = doc.createAttribute("frequency");
-		Attr massAttr = doc.createAttribute("value");
-		
-		tempAttr.setValue("0.5");
-		pathAttr.setValue("10");
-		oscAttr.setValue("1.0");
-		massAttr.setValue("1.0");
-		
-		temperature.setAttributeNode(tempAttr);
-		path.setAttributeNode(pathAttr);
-		oscillator.setAttributeNode(oscAttr);
-		mass.setAttributeNode(massAttr);
-		
+		addNodeAttribute(doc, rootElement, "Temperature", "value", "0.5");
+		addNodeAttribute(doc, rootElement, "Path", "sliceCount", "10");
+		addNodeAttribute(doc, rootElement, "Oscillator", "frequency", "1.0");
+		addNodeAttribute(doc, rootElement, "Mass", "value", "1.0");
+
 		transformerFactory = TransformerFactory.newInstance();
 		transformer = transformerFactory.newTransformer();
 		source = new DOMSource(doc);
 		result = new StreamResult(new File("input.xml"));
 		
 		transformer.transform(source, result);
+	}
+
+	private void addNodeAttribute(Document doc, Element rootElement, String elemTag, String attrTag, String attrVal) {
+		Element elem = doc.createElement(elemTag);
+		rootElement.appendChild(elem);
+		Attr elemAttr = doc.createAttribute(attrTag);
+		elemAttr.setValue(attrVal);
+		elem.setAttributeNode(elemAttr);
 	}
 
 }

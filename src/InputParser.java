@@ -1,11 +1,9 @@
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -18,7 +16,6 @@ public class InputParser {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(input);
-		doc.getDocumentElement().normalize();
 		
 		NodeList temp = doc.getElementsByTagName("Temperature");
 		String Temperature  = temp.item(0).getAttributes().getNamedItem("value").getNodeValue();
