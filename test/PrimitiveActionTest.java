@@ -23,14 +23,18 @@ public class PrimitiveActionTest {
 	
 	@Test
 	public void testMassDerivative() {
-		double expect = 0.25 * deltaTau *(xold*xold + xprev*xprev);
+		double expect = -1/(2*mass); 
+		expect += 0.5 * (xold - xprev)*(xold - xprev) / deltaTau;
+		expect += 0.25 * deltaTau *(xold*xold + xprev*xprev);
 		double massderiv = action.getMassDerivative(xold, xprev);
 		assertEquals(expect,massderiv,1e-14);
 	}
 	
 	@Test
 	public void testDeltaTauDerivative() {
-		double expect = 0.25 * mass * (xold*xold + xprev*xprev);
+		double expect = 1/(2*deltaTau);
+		expect -= 0.5 * mass * (xold - xprev)*(xold - xprev) / (deltaTau * deltaTau);
+		expect += 0.25 * mass * (xold*xold + xprev*xprev);
 		double deltatauderiv = action.getDeltaTauDerivative(xold, xprev);
 		assertEquals(expect,deltatauderiv,1e-14);		
 	}

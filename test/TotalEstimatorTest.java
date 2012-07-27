@@ -14,6 +14,7 @@ public class TotalEstimatorTest {
 	private Estimator potential;
 	private Estimator kinetic;
 	private Estimator total;
+	private double angfreq;
 	
 	@Before
 	public void setUp() {
@@ -24,31 +25,15 @@ public class TotalEstimatorTest {
 		path.setPosition(2,0.5);
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
-		action = new PrimitiveAction(deltaTau, mass);
+		angfreq = 1.0;
+		action = new ExactSHOAction(deltaTau, mass, angfreq);
 		kinetic = new KineticEnergyEstimator(path, action, mass);
 		potential = new PotentialEnergyEstimator(path, action, mass);		
 		total = new TotalEnergyEstimator(potential, kinetic);
 	}
 	@Test
 	public void testGetValue() {
-		double kineticexpect = 0;
-		for(int i = 0; i < sliceCount; i++) {
-			double x = path.getPosition(i);
-			double xnext = path.getPosition((i+1)%sliceCount);
-			kineticexpect -= 0.5 * mass * (xnext-x)*(xnext-x) / (deltaTau*deltaTau);
-		}
-		kineticexpect /= sliceCount;
-		kineticexpect += 1/(2*deltaTau);
-		
-		double avgx = 0;
-    	for (int i = 0; i < sliceCount; i++) {
-            double x = path.getPosition(i);
-            avgx += x;
-        }
-    	avgx /= sliceCount;
-		double potentialexpect = 0.5 * mass * avgx * avgx;
-		
-		double expect = potentialexpect + kineticexpect;
+		double expect = potential.getValue() + kinetic.getValue();
 		
 		double totalEnergy = total.getValue();
 		assertEquals(expect,totalEnergy,1e-14);

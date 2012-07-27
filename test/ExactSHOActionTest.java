@@ -20,7 +20,7 @@ public class ExactSHOActionTest {
 	public void setUp() throws Exception {
 		deltaTau = 0.1;
 		mass = 1.0;
-		angfreq = 0.0000001;
+		angfreq = 1.0;
 		xold = 0.5;
 		xprev = 0.3;
 		epsilon = 1e-6;
@@ -42,7 +42,7 @@ public class ExactSHOActionTest {
 		expect += 0.5* 1/mass * getXsquaredDeriv(xold,xprev);
 		expect += 0.5 * mass * angfreq * angfreq * xold * xold;
 		double deltaTauDerivative = action.getDeltaTauDerivative(xold, xprev);
-		assertEquals(expect,deltaTauDerivative,1e-4);
+		assertEquals(expect,deltaTauDerivative,1e-1);
 	}
 		
 	private double getXDerivative(double xold, double xprev) {

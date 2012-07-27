@@ -51,7 +51,7 @@ public class QuantumMonte {
     	
 		QuantumMonte qmc = new QuantumMonte(advancer, measurer);
 		
-		DataManager dataManager = new DataManager();
+		DataManager dataManager = new DataManager(kT, angfreq);
 		qmc.run(dataManager);
 	}
 
