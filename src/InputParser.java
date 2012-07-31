@@ -57,12 +57,11 @@ public class InputParser {
 
     private Action getAction() {
 		String name = getStringAttribute("Action", "name");
-		if(name.equals("ExactSHOAction")) {
-			return new ExactSHOAction(deltaTau, mass, angfreq); 
-		}
-		else if(name.equals("PrimitiveAction")) {
-			return new PrimitiveAction(deltaTau, mass);
-		}
+        if (name.equals("ExactSHOAction")) {
+            return new ExactSHOAction(deltaTau, mass, angfreq);
+        } else if (name.equals("PrimitiveAction")) {
+            return new PrimitiveAction(deltaTau, mass);
+        }
 		return null; 
 	}
 

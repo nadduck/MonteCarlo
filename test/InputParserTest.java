@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -55,13 +57,13 @@ public class InputParserTest {
         assertEquals(expectedSimInfo.getMass(), simulationInfo.getMass(), 1e-14);
     }
     
-    /*
     @Test
     public void testAction() {
         SimulationInfo simulationInfo = inputParser.parseXML(doc);
-        assertEquals(expectedSimInfo.getAction(), simulationInfo.getAction());
+        Class<? extends Action> expectedClass = expectedSimInfo.getAction().getClass();
+        Class<? extends Action> actionClass = simulationInfo.getAction().getClass();
+        assertEquals(expectedClass, actionClass);
     }
-	*/
     
     private SimulationInfo createSimulationInfo() {
         SimulationInfo simulationInfo = new SimulationInfo();
