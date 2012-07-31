@@ -13,6 +13,7 @@ public class InputParserTest {
     private Double mass;
     private InputParser inputParser;
     private SimulationInfo expectedSimInfo;
+    private Action action;
 
     @Before
     public void before() throws ParserConfigurationException {
@@ -20,6 +21,9 @@ public class InputParserTest {
         sliceCount = 20;
         frequency = 0.8;
         mass = 0.1;
+        
+        double deltaTau = 1.0/(temperature*sliceCount);
+        action = new PrimitiveAction(deltaTau, mass);
         createXMLDocument();
         inputParser = new InputParser();
         expectedSimInfo = createSimulationInfo();
@@ -50,13 +54,22 @@ public class InputParserTest {
         SimulationInfo simulationInfo = inputParser.parseXML(doc);
         assertEquals(expectedSimInfo.getMass(), simulationInfo.getMass(), 1e-14);
     }
-
+    
+    /*
+    @Test
+    public void testAction() {
+        SimulationInfo simulationInfo = inputParser.parseXML(doc);
+        assertEquals(expectedSimInfo.getAction(), simulationInfo.getAction());
+    }
+	*/
+    
     private SimulationInfo createSimulationInfo() {
         SimulationInfo simulationInfo = new SimulationInfo();
         simulationInfo.setkT(temperature);
         simulationInfo.setSliceCount(sliceCount);
         simulationInfo.setAngfreq(frequency);
         simulationInfo.setMass(mass);
+        simulationInfo.setAction(action);
         return simulationInfo;
     }
 
@@ -73,6 +86,7 @@ public class InputParserTest {
         addNodeWithAttribute("Path", "sliceCount", sliceCount.toString());
         addNodeWithAttribute("Oscillator", "frequency", frequency.toString());
         addNodeWithAttribute("Mass", "value", mass.toString());
+        addNodeWithAttribute("Action","name", action.getName());
     }
 
     private void addNodeWithAttribute(String elemTag, String attrTag,

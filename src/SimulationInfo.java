@@ -4,13 +4,7 @@ public class SimulationInfo {
     private int sliceCount;
     private double mass;
     private double angfreq;
-
-    public SimulationInfo() {
-        kT = 0.5;
-        sliceCount = 10;
-        mass = 1.0;
-        angfreq = 1.0;
-    }
+    private Action action;
 
     public double getkT() {
         return kT;
@@ -42,5 +36,13 @@ public class SimulationInfo {
 
     public void setAngfreq(double angfreq) {
         this.angfreq = angfreq;
+    }
+    
+    public Action getAction() {
+        return action;
+    }
+
+    public void setAction(Action action) {
+        this.action = action;
     }
 }

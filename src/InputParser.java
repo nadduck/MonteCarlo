@@ -12,6 +12,11 @@ import java.io.IOException;
 public class InputParser {
 
 	private Document doc;
+	private double kT;
+	private int sliceCount;
+	private double angfreq;
+	private double mass;
+	private double deltaTau;
 
     public SimulationInfo parseXMLFromFile(String inputFileName) 
 	        throws ParserConfigurationException, SAXException, IOException {
@@ -33,21 +38,35 @@ public class InputParser {
     public SimulationInfo parseXML(Document document) {
         this.doc = document;
         
-        double kT = getTemperature();
-		int sliceCount = getSliceCount();
-		double angfreq = getFrequency();
-		double mass = getMass();
+        kT = getTemperature();
+		sliceCount = getSliceCount();
+		angfreq = getFrequency();
+		mass = getMass();
+		deltaTau = 1.0/(kT*sliceCount);
+		Action action = getAction();
 		
 		SimulationInfo simulationInfo = new SimulationInfo();
 		simulationInfo.setkT(kT);
 		simulationInfo.setAngfreq(angfreq);
 		simulationInfo.setSliceCount(sliceCount);
 		simulationInfo.setMass(mass);
+		simulationInfo.setAction(action);
 		
 		return simulationInfo;
     }
 
-    public double getTemperature() {
+    private Action getAction() {
+		String name = getStringAttribute("Action", "name");
+		if(name.equals("ExactSHOAction")) {
+			return new ExactSHOAction(deltaTau, mass, angfreq); 
+		}
+		else if(name.equals("PrimitiveAction")) {
+			return new PrimitiveAction(deltaTau, mass);
+		}
+		return null; 
+	}
+
+	public double getTemperature() {
         return getDoubleAttribute("Temperature", "value");
     }
 

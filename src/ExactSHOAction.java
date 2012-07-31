@@ -51,4 +51,9 @@ public class ExactSHOAction implements Action {
 		return expArg;	
 	}
 
+	@Override
+	public String getName() {
+		return "ExactSHOAction";
+	}
+
 }

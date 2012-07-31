@@ -44,5 +44,10 @@ public class PrimitiveAction implements Action{
 	private double getPotential(double xold) {
         return 0.5 * mass * deltaTau * xold * xold;
     }
+
+	@Override
+	public String getName() {
+		return "PrimitiveAction";
+	}
     
 }

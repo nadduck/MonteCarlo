@@ -1,6 +1,10 @@
 import java.io.IOException;
 import java.util.Random;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 public class QuantumMonte {
     
     private Advancer advancer;
@@ -23,8 +27,9 @@ public class QuantumMonte {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        SimulationInfo simulationInfo = new SimulationInfo();
+    public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
+        InputParser inputParser = new InputParser();
+    	SimulationInfo simulationInfo = inputParser.parseXMLFromFile("input.xml");
 		double kT = simulationInfo.getkT();
         int sliceCount = simulationInfo.getSliceCount();
         Path path = new Path(sliceCount, kT);
@@ -32,9 +37,8 @@ public class QuantumMonte {
         double deltaTau = path.getDeltaTau();        
         double mass = simulationInfo.getMass();
         double angfreq = simulationInfo.getAngfreq();
-        Action action = new PrimitiveAction(deltaTau, mass);
-        action = new ExactSHOAction(deltaTau, mass, angfreq);
-
+        Action action = simulationInfo.getAction();
+        
         Random rand = new Random(2012L);        
         double delta = 1.0;
         Mover mover = new UniformMover(rand, delta);
@@ -51,7 +55,7 @@ public class QuantumMonte {
     	
 		QuantumMonte qmc = new QuantumMonte(advancer, measurer);
 		
-		DataManager dataManager = new DataManager(kT, angfreq);
+		DataManager dataManager = new DataManager(kT, angfreq, mass, action);
 		qmc.run(dataManager);
 	}
 
