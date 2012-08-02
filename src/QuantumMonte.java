@@ -22,7 +22,7 @@ public class QuantumMonte {
         dataManager.openOutputFile("something.dat");
         for (int j = 0; j < 5000; j++) {
             measurer.doMeasurement(dataManager, j);
-            advancer.advance(100);
+            advancer.advance(10000);
         }
         dataManager.close();
     }

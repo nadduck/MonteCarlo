@@ -17,7 +17,7 @@ public class XMLCreator {
     
     public XMLCreator() {
     	temperature = 0.5;
-    	sliceCount = 10;
+    	sliceCount = 20;
     	frequency = 1.0;
     	mass = 1.0;
     	double deltaTau = 1/(temperature*sliceCount);
