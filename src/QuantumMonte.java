@@ -3,6 +3,7 @@ import java.util.Random;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 public class QuantumMonte {
@@ -28,8 +29,12 @@ public class QuantumMonte {
 
 
     public static void main(String[] args) throws IOException, ParserConfigurationException, SAXException {
-        InputParser inputParser = new InputParser();
-    	SimulationInfo simulationInfo = inputParser.parseXMLFromFile("input.xml");
+        XMLCreator xmlCreator = new XMLCreator();
+        Document doc = xmlCreator.createXMLDocument();
+        
+    	InputParser inputParser = new InputParser();
+    	SimulationInfo simulationInfo = inputParser.parseXML(doc);
+    	
 		double kT = simulationInfo.getkT();
         int sliceCount = simulationInfo.getSliceCount();
         Path path = new Path(sliceCount, kT);

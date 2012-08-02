@@ -1,7 +1,4 @@
 import static org.junit.Assert.*;
-
-import java.util.List;
-
 import org.junit.*;
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
@@ -26,7 +23,8 @@ public class InputParserTest {
         
         double deltaTau = 1.0/(temperature*sliceCount);
         action = new PrimitiveAction(deltaTau, mass);
-        createXMLDocument();
+        XMLCreator xmlCreator = new XMLCreator(temperature, sliceCount, frequency, mass, action);
+        doc = xmlCreator.createXMLDocument();
         inputParser = new InputParser();
         expectedSimInfo = createSimulationInfo();
     }
@@ -75,30 +73,5 @@ public class InputParserTest {
         return simulationInfo;
     }
 
-    private void createXMLDocument() throws ParserConfigurationException {
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory
-                .newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-
-        doc = docBuilder.newDocument();
-        Element rootElement = doc.createElement("MonteCarlo");
-        doc.appendChild(rootElement);
-
-        addNodeWithAttribute("Temperature", "value", temperature.toString());
-        addNodeWithAttribute("Path", "sliceCount", sliceCount.toString());
-        addNodeWithAttribute("Oscillator", "frequency", frequency.toString());
-        addNodeWithAttribute("Mass", "value", mass.toString());
-        addNodeWithAttribute("Action","name", action.getName());
-    }
-
-    private void addNodeWithAttribute(String elemTag, String attrTag,
-            String attrVal) {
-        Element elem = doc.createElement(elemTag);
-        Element rootElement = doc.getDocumentElement();
-        rootElement.appendChild(elem);
-        Attr elemAttr = doc.createAttribute(attrTag);
-        elemAttr.setValue(attrVal);
-        elem.setAttributeNode(elemAttr);
-    }
 
 }
