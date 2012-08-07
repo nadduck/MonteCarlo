@@ -29,7 +29,7 @@ public class Advancer {
             
             double acceptanceProbability = Math.exp(-deltaS) / tprob;
             
-            if (rand.nextDouble() < acceptanceProbability && xnew.getMagnitude() > 0) {  
+            if (rand.nextDouble() < acceptanceProbability && xnew.x > 0) {  
                 path.setPosition(slice, xnew);
             }
         }

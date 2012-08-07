@@ -1,4 +1,3 @@
-
 public class ExactSHOAction implements Action {
 
 	private double mass;
@@ -31,10 +30,10 @@ public class ExactSHOAction implements Action {
 	public double getDeltaTauDerivative(Point xold, Point xprev) { 
 		double angfreq2 = angfreq*angfreq;
 		double dSdtau = 0.5*angfreq*cothwt;
-		double xold2 = xold.getMagnitude()*xold.getMagnitude();
-		double xprev2 = xprev.getMagnitude()*xprev.getMagnitude();
+		double xold2 = xold.getMagnitude2();
+		double xprev2 = xprev.getMagnitude2();
 		dSdtau -= 0.5*mass*angfreq2*cschwt*cschwt*(xold2+xprev2);
-		dSdtau += mass*angfreq2*xold.getMagnitude()*xprev.getMagnitude()*cothwt*cschwt;
+		dSdtau += mass*angfreq2*xold.dot(xprev)*cothwt*cschwt;
 		return dSdtau;
 	}
 
@@ -49,9 +48,9 @@ public class ExactSHOAction implements Action {
 	}
 	
 	private double getExponentialArg(Point xold, Point xprev) {
-		double xold2 = xold.getMagnitude()*xold.getMagnitude();
-		double xprev2 = xprev.getMagnitude()*xprev.getMagnitude();
-		double expArg = mass*angfreq*((xold2+xprev2)*coshwt - 2*xold.getMagnitude()*xprev.getMagnitude())/(2*sinhwt);
+		double xold2 = xold.getMagnitude2();
+		double xprev2 = xprev.getMagnitude2();
+		double expArg = mass*angfreq*((xold2+xprev2)*coshwt - 2*xold.dot(xprev))/(2*sinhwt);
 		return expArg;	
 	}
 

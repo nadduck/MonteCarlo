@@ -13,7 +13,8 @@ public class UniformMover implements Mover {
     @Override
     public Point sampleNewPosition(PathSegment segment) {
         Point newPosition = segment.getX();
-        Displacement deltaDisplacement = new Displacement(delta * (2 * rand.nextDouble() - 1));
+        Displacement deltaDisplacement = 
+                Displacement.newUniformDisplacement(delta, rand);
         newPosition.move(deltaDisplacement);
     	return newPosition;
     }

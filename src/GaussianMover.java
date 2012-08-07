@@ -15,20 +15,11 @@ public class GaussianMover implements Mover {
 
     @Override
     public Point sampleNewPosition(PathSegment segment) {
-/*    	Point xmid = segment.getMidpoint();
-    	Displacement x = new Displacement(0);
-    	x.makeGaussianRandom(sigma, rand);
-        Point xnew = new Point(xmid.getMagnitude());
-        xnew.move(x);
-        
-        tranProb = calculateTransitionProbability(xmid, xnew);
-        
-        Point xold = segment.getX();
-        tranProb /= calculateTransitionProbability(xmid, xold);
-        
-        return xnew;*/
         Point xmid = segment.getMidpoint();
-        Point xnew = new Point(xmid.getMagnitude() + sigma * rand.nextGaussian());
+        
+        Point xnew = new Point(xmid);
+        Displacement delta = Displacement.newGuassianRand(sigma, rand);
+        xnew.move(delta);
         
         tranProb = calculateTransitionProbability(xmid, xnew);
         
@@ -40,7 +31,7 @@ public class GaussianMover implements Mover {
 
     private double calculateTransitionProbability(Point xmid, Point xnew) {
         Displacement difference = xnew.getDifference(xmid);
-    	double x2 = difference.getMagnitude() * difference.getMagnitude();
+    	double x2 = difference.getMagnitude2();
         return Math.exp(-0.5 * x2  / sigma2);
     }
 

@@ -23,14 +23,14 @@ public class Measurer {
     
     private double calculateXSquared() {
     	Point x = path.getPosition(0);
-    	return x.getMagnitude()*x.getMagnitude();
+    	return x.getMagnitude2();
     }
     
     private double calculateAvgX() {
     	double sum = 0;
     	for (int i = 0; i < sliceCount; i++) {
             Point x = path.getPosition(i);
-            sum += x.getMagnitude();
+            sum += x.x;
         }
     	return sum/sliceCount;
     }

@@ -38,10 +38,10 @@ public class ExactSHOActionTest {
 	
 	@Test
 	public void testGetDeltaTauDerivative() {
-		double expect = -0.5* 1/mass * getXDerivative(xold.getMagnitude(),xprev.getMagnitude())
-				*getXDerivative(xold.getMagnitude(),xprev.getMagnitude());
-		expect += 0.5* 1/mass * getXsquaredDeriv(xold.getMagnitude(),xprev.getMagnitude());
-		expect += 0.5 * mass * angfreq * angfreq * xold.getMagnitude() * xold.getMagnitude();
+		double expect = -0.5* 1/mass * getXDerivative(xold.x,xprev.x)
+				*getXDerivative(xold.x,xprev.x);
+		expect += 0.5* 1/mass * getXsquaredDeriv(xold.x,xprev.x);
+		expect += 0.5 * mass * angfreq * angfreq * xold.x * xold.x;
 		double deltaTauDerivative = action.getDeltaTauDerivative(xold, xprev);
 		assertEquals(expect,deltaTauDerivative,1e-1);
 	}

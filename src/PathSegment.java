@@ -35,7 +35,7 @@ public class PathSegment {
     }
     
     public Point getMidpoint() {
-        Point midPoint = new Point(0.5*(xnext.getMagnitude() + xprev.getMagnitude()));
+        Point midPoint = Point.midpoint(xprev, xnext);
     	return midPoint;
     }
 }

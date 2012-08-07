@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.Random;
 
 import org.junit.Before;
@@ -34,10 +35,11 @@ public class GaussianMoverTest {
 
     @Test
     public void testNewPosition() {
-        double gaussRand = randCopy.nextGaussian();
-        double expect = sigma * gaussRand + segment.getMidpoint().getMagnitude();
-        Point xnew = mover.sampleNewPosition(segment);
-        assertEquals(expect, xnew.getMagnitude(), 1e-14);
+        Displacement delta = Displacement.newGuassianRand(sigma, randCopy);
+        Point expect = segment.getMidpoint();
+        expect.move(delta);
+        Point actual = mover.sampleNewPosition(segment);
+        assertArrayEquals(expect.toArray(), actual.toArray(), 1e-14);
     }
 
     @Test
@@ -46,9 +48,9 @@ public class GaussianMoverTest {
         Point xnew = mover.sampleNewPosition(segment);
         Point xmid = segment.getMidpoint();
         Displacement xnewDiff = xnew.getDifference(xmid);
-        double deltaXNew2 = xnewDiff.getMagnitude() * xnewDiff.getMagnitude();
+        double deltaXNew2 = xnewDiff.getMagnitude2();
         Displacement xoldDiff = xold.getDifference(xmid);
-        double deltaXOld2 = xoldDiff.getMagnitude() * xoldDiff.getMagnitude();
+        double deltaXOld2 = xoldDiff.getMagnitude2();
         double expect = Math.exp(-0.5 * (deltaXNew2 - deltaXOld2) / sigma2 );
         double tranProb = mover.getLastTransitionProbability();
         assertEquals(expect, tranProb, 1e-14);

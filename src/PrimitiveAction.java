@@ -13,8 +13,8 @@ public class PrimitiveAction implements Action{
 	public double getMassDerivative(Point xold, Point xprev) {
 		double dSdm = -1/(2*mass); 
 		Displacement difference = xold.getDifference(xprev);
-		dSdm += 0.5 * difference.getMagnitude()*difference.getMagnitude() / deltaTau;
-		dSdm += 0.25 * deltaTau *(xold.getMagnitude()*xold.getMagnitude() + xprev.getMagnitude()*xprev.getMagnitude());
+		dSdm += 0.5 * difference.getMagnitude2() / deltaTau;
+		dSdm += 0.25 * deltaTau *(xold.getMagnitude2() + xprev.getMagnitude2());
 		return dSdm;
 	}
 
@@ -22,8 +22,8 @@ public class PrimitiveAction implements Action{
 	public double getDeltaTauDerivative(Point xold, Point xprev) {
 		double dSdtau = 1/(2*deltaTau);
 		Displacement difference = xold.getDifference(xprev);
-		dSdtau -= 0.5 * mass * difference.getMagnitude()*difference.getMagnitude() / (deltaTau * deltaTau);
-		dSdtau += 0.25 * mass * (xold.getMagnitude()*xold.getMagnitude() + xprev.getMagnitude()*xprev.getMagnitude());
+		dSdtau -= 0.5 * mass * difference.getMagnitude2() / (deltaTau * deltaTau);
+		dSdtau += 0.25 * mass * (xold.getMagnitude2() + xprev.getMagnitude2());
 		return dSdtau;
 	}
 
@@ -41,11 +41,11 @@ public class PrimitiveAction implements Action{
 
 	private double getKinetic(Point xold, Point xprev) {
 		Displacement difference = xold.getDifference(xprev);
-		return 0.5 * mass * difference.getMagnitude()*difference.getMagnitude() / deltaTau;
+		return 0.5 * mass * difference.getMagnitude2() / deltaTau;
 	}
 	
 	private double getPotential(Point xnew) {
-        return 0.5 * mass * deltaTau * xnew.getMagnitude() * xnew.getMagnitude();
+        return 0.5 * mass * deltaTau * xnew.getMagnitude2();
     }
 
 	@Override

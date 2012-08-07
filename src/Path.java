@@ -1,4 +1,3 @@
-
 public class Path {
 
     private int sliceCount;
