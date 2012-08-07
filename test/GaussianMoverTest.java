@@ -25,8 +25,9 @@ public class GaussianMoverTest {
         rand = new Random(42L);
         randCopy = new Random(42L);
         mover = new GaussianMover(rand, deltaTau, mass);
-        segment = new PathSegment(0,0,0);
-        segment.setNext(1.0);
+        Point zero = new Point(0);
+        segment = new PathSegment(zero,zero,zero);
+        segment.setNext(new Point(1.0));
         sigma2 = 0.5 * deltaTau / mass;
         sigma = Math.sqrt(sigma2);
     }
@@ -34,19 +35,21 @@ public class GaussianMoverTest {
     @Test
     public void testNewPosition() {
         double gaussRand = randCopy.nextGaussian();
-        double expect = sigma * gaussRand + segment.getMidpoint();
-        double xnew = mover.sampleNewPosition(segment);
-        assertEquals(expect, xnew, 1e-14);
+        double expect = sigma * gaussRand + segment.getMidpoint().getMagnitude();
+        Point xnew = mover.sampleNewPosition(segment);
+        assertEquals(expect, xnew.getMagnitude(), 1e-14);
     }
 
     @Test
     public void testTransitionProbability() {
-        double xold = segment.getX();
-        double xnew = mover.sampleNewPosition(segment);
-        double xmid = segment.getMidpoint();
-        double deltaXNew2 = (xnew - xmid) * (xnew - xmid);
-        double deltaXOld2 = (xold - xmid) * (xold - xmid);
-        double expect = Math.exp(-0.5 * (deltaXNew2  - deltaXOld2) / sigma2 );
+    	Point xold = segment.getX();
+        Point xnew = mover.sampleNewPosition(segment);
+        Point xmid = segment.getMidpoint();
+        Displacement xnewDiff = xnew.getDifference(xmid);
+        double deltaXNew2 = xnewDiff.getMagnitude() * xnewDiff.getMagnitude();
+        Displacement xoldDiff = xold.getDifference(xmid);
+        double deltaXOld2 = xoldDiff.getMagnitude() * xoldDiff.getMagnitude();
+        double expect = Math.exp(-0.5 * (deltaXNew2 - deltaXOld2) / sigma2 );
         double tranProb = mover.getLastTransitionProbability();
         assertEquals(expect, tranProb, 1e-14);
     }

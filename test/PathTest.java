@@ -22,10 +22,10 @@ public class PathTest {
 	@Test
 	public void testGetAndSetPosition() {
 		int index = 3;
-		double expect = 0.42;
+		Point expect = new Point(0.42);
 		path.setPosition(index, expect);
-		double testGetPosition = path.getPosition(index);
-		assertEquals(expect, testGetPosition, 1e-14);
+		Point testGetPosition = path.getPosition(index);
+		assertEquals(expect, testGetPosition);
 	}
 	
 	@Test

@@ -22,14 +22,14 @@ public class Advancer {
 
             PathSegment segment = getOldSegment(slice);
             
-            double xnew = mover.sampleNewPosition(segment);
+            Point xnew = mover.sampleNewPosition(segment);
             double tprob = mover.getLastTransitionProbability();
             
             double deltaS = action.getActionDifference(segment, xnew);
             
             double acceptanceProbability = Math.exp(-deltaS) / tprob;
             
-            if (rand.nextDouble() < acceptanceProbability && xnew > 0) {
+            if (rand.nextDouble() < acceptanceProbability && xnew.getMagnitude() > 0) {  
                 path.setPosition(slice, xnew);
             }
         }
@@ -39,9 +39,9 @@ public class Advancer {
         int prevSlice = ((slice - 1) + sliceCount) % sliceCount;
         int nextSlice = (slice + 1) % sliceCount;
         
-        double xnext = path.getPosition(nextSlice);
-        double xprev = path.getPosition(prevSlice);
-        double x = path.getPosition(slice);
+        Point xnext = path.getPosition(nextSlice);
+        Point xprev = path.getPosition(prevSlice);
+        Point x = path.getPosition(slice);
         
         PathSegment segment = new PathSegment(xprev, x, xnext);
         return segment;

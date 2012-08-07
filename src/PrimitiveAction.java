@@ -10,23 +10,25 @@ public class PrimitiveAction implements Action{
     }
 
 	@Override
-	public double getMassDerivative(double xold, double xprev) {
+	public double getMassDerivative(Point xold, Point xprev) {
 		double dSdm = -1/(2*mass); 
-		dSdm += 0.5 * (xold - xprev)*(xold - xprev) / deltaTau;
-		dSdm += 0.25 * deltaTau *(xold*xold + xprev*xprev);
+		Displacement difference = xold.getDifference(xprev);
+		dSdm += 0.5 * difference.getMagnitude()*difference.getMagnitude() / deltaTau;
+		dSdm += 0.25 * deltaTau *(xold.getMagnitude()*xold.getMagnitude() + xprev.getMagnitude()*xprev.getMagnitude());
 		return dSdm;
 	}
 
 	@Override
-	public double getDeltaTauDerivative(double xold, double xprev) {
+	public double getDeltaTauDerivative(Point xold, Point xprev) {
 		double dSdtau = 1/(2*deltaTau);
-		dSdtau -= 0.5 * mass * (xold - xprev)*(xold - xprev) / (deltaTau * deltaTau);
-		dSdtau += 0.25 * mass * (xold*xold + xprev*xprev);
+		Displacement difference = xold.getDifference(xprev);
+		dSdtau -= 0.5 * mass * difference.getMagnitude()*difference.getMagnitude() / (deltaTau * deltaTau);
+		dSdtau += 0.25 * mass * (xold.getMagnitude()*xold.getMagnitude() + xprev.getMagnitude()*xprev.getMagnitude());
 		return dSdtau;
 	}
 
 	@Override
-	public double getActionDifference(PathSegment segment, double xnew) {
+	public double getActionDifference(PathSegment segment, Point xnew) {
 		double deltaS = 0;
         deltaS += getKinetic(xnew, segment.getPrev());
         deltaS += getKinetic(xnew, segment.getNext());
@@ -37,12 +39,13 @@ public class PrimitiveAction implements Action{
         return deltaS;
 	}
 
-	private double getKinetic(double xold, double xprev) {
-		return 0.5 * mass * (xold-xprev)*(xold-xprev) / deltaTau;
+	private double getKinetic(Point xold, Point xprev) {
+		Displacement difference = xold.getDifference(xprev);
+		return 0.5 * mass * difference.getMagnitude()*difference.getMagnitude() / deltaTau;
 	}
 	
-	private double getPotential(double xold) {
-        return 0.5 * mass * deltaTau * xold * xold;
+	private double getPotential(Point xnew) {
+        return 0.5 * mass * deltaTau * xnew.getMagnitude() * xnew.getMagnitude();
     }
 
 	@Override

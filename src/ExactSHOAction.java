@@ -20,7 +20,7 @@ public class ExactSHOAction implements Action {
 	}
 	
 	@Override
-	public double getMassDerivative(double xold, double xprev) {
+	public double getMassDerivative(Point xold, Point xprev) {
 		double expArg = getExponentialArg(xold, xprev);
 		
 		double dSdm = -0.5 * 1/mass + expArg/mass;
@@ -28,16 +28,18 @@ public class ExactSHOAction implements Action {
 	}
 
 	@Override
-	public double getDeltaTauDerivative(double xold, double xprev) { 
+	public double getDeltaTauDerivative(Point xold, Point xprev) { 
 		double angfreq2 = angfreq*angfreq;
 		double dSdtau = 0.5*angfreq*cothwt;
-		dSdtau -= 0.5*mass*angfreq2*cschwt*cschwt*(xold*xold+xprev*xprev);
-		dSdtau += mass*angfreq2*xold*xprev*cothwt*cschwt;
+		double xold2 = xold.getMagnitude()*xold.getMagnitude();
+		double xprev2 = xprev.getMagnitude()*xprev.getMagnitude();
+		dSdtau -= 0.5*mass*angfreq2*cschwt*cschwt*(xold2+xprev2);
+		dSdtau += mass*angfreq2*xold.getMagnitude()*xprev.getMagnitude()*cothwt*cschwt;
 		return dSdtau;
 	}
 
 	@Override
-	public double getActionDifference(PathSegment segment, double xnew) {
+	public double getActionDifference(PathSegment segment, Point xnew) {
 		double deltaS = 0; 
 		deltaS += getExponentialArg(xnew,segment.getPrev());
 		deltaS += getExponentialArg(xnew,segment.getNext());
@@ -46,8 +48,10 @@ public class ExactSHOAction implements Action {
 		return deltaS;
 	}
 	
-	private double getExponentialArg(double xold, double xprev) {
-		double expArg = mass*angfreq*((xold*xold+xprev*xprev)*coshwt - 2*xold*xprev)/(2*sinhwt);
+	private double getExponentialArg(Point xold, Point xprev) {
+		double xold2 = xold.getMagnitude()*xold.getMagnitude();
+		double xprev2 = xprev.getMagnitude()*xprev.getMagnitude();
+		double expArg = mass*angfreq*((xold2+xprev2)*coshwt - 2*xold.getMagnitude()*xprev.getMagnitude())/(2*sinhwt);
 		return expArg;	
 	}
 

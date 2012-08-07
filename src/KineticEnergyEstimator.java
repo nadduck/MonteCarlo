@@ -20,8 +20,8 @@ public class KineticEnergyEstimator implements Estimator {
 	public double getValue() {
 		double T = 0;
     	for (int i = 0; i < sliceCount; i++) {
-    		double x = path.getPosition(i);
-    		double xnext = path.getPosition((i+1)%sliceCount);
+    		Point x = path.getPosition(i);
+    		Point xnext = path.getPosition((i+1)%sliceCount);
     		T -= mass * action.getMassDerivative(x, xnext) / deltaTau;    		
     	}
     	T /= sliceCount;

@@ -21,8 +21,8 @@ public class KEEstimatorTest {
 		kT = 0.5;
 		angfreq = 1.0;
 		path = new Path(sliceCount, kT);
-		path.setPosition(1, 1);
-		path.setPosition(2,0.5);
+		path.setPosition(1, new Point(1));
+		path.setPosition(2,new Point(0.5));
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
 		action = new ExactSHOAction(deltaTau, mass, angfreq);
@@ -33,8 +33,8 @@ public class KEEstimatorTest {
 	public void testGetValue() {
 		double expect = 0;
     	for (int i = 0; i < sliceCount; i++) {
-    		double x = path.getPosition(i);
-    		double xnext = path.getPosition((i+1)%sliceCount);
+    		Point x = path.getPosition(i);
+    		Point xnext = path.getPosition((i+1)%sliceCount);
     		expect -= mass * action.getMassDerivative(x, xnext) / deltaTau;    		
     	}
     	expect /= sliceCount;

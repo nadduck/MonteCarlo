@@ -2,7 +2,7 @@
 public class Path {
 
     private int sliceCount;
-    private double[] position;
+    private Point[] position;
     private double kT;
     private double deltaTau;
     
@@ -12,18 +12,18 @@ public class Path {
         this.deltaTau = 1.0 / (kT * sliceCount);
         this.sliceCount = sliceCount;
         
-        position = new double[sliceCount];
+        position = new Point[sliceCount];
     
         for (int i = 0; i < sliceCount; i++) {
-            position[i] = 0;
+            position[i] = new Point(0);
         }
     }
 
-    public void setPosition(int index, double x) {
+    public void setPosition(int index, Point x) {
         position[index] = x;
     }
 
-    public double getPosition(int index) {
+    public Point getPosition(int index) {
         return position[index];
     }
 

@@ -3,7 +3,7 @@ import java.util.Random;
 
 public class Displacement {
 
-    double x;
+    private double x;
     
     Displacement(double x) {
         this.x = x;
@@ -13,7 +13,7 @@ public class Displacement {
         return Math.abs(x);
     }
    
-    public void makeGuassianRandom(Random rand) {
-        x = rand.nextGaussian();
+    public void makeGaussianRandom(double sigma, Random rand) {
+        x = sigma*rand.nextGaussian();
     }
 }

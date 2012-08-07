@@ -8,8 +8,8 @@ public class ExactSHOActionTest {
 
 	private double deltaTau;
 	private double mass;
-	private double xold;
-	private double xprev;
+	private Point xold;
+	private Point xprev;
 	private double angfreq;
 	private Action action;
 	private double coshwt;
@@ -21,8 +21,8 @@ public class ExactSHOActionTest {
 		deltaTau = 0.1;
 		mass = 1.0;
 		angfreq = 1.0;
-		xold = 0.5;
-		xprev = 0.3;
+		xold = new Point(0.5);
+		xprev = new Point(0.3);
 		epsilon = 1e-6;
 		coshwt = Math.cosh(deltaTau*angfreq);
 		sinhwt = Math.sinh(deltaTau*angfreq);
@@ -31,16 +31,17 @@ public class ExactSHOActionTest {
 
 	@Test
 	public void testGetMassDerivative() {
-		double expect = -0.5 * 1/mass + getExponentialArg(xold,xprev)/mass;
+		double expect = -0.5 * 1/mass + getExponentialArg(xold.getMagnitude(),xprev.getMagnitude())/mass;
 		double massDerivative = action.getMassDerivative(xold, xprev);
 		assertEquals(expect,massDerivative,1e-14);
 	}
 	
 	@Test
 	public void testGetDeltaTauDerivative() {
-		double expect = -0.5* 1/mass * getXDerivative(xold,xprev)*getXDerivative(xold,xprev);
-		expect += 0.5* 1/mass * getXsquaredDeriv(xold,xprev);
-		expect += 0.5 * mass * angfreq * angfreq * xold * xold;
+		double expect = -0.5* 1/mass * getXDerivative(xold.getMagnitude(),xprev.getMagnitude())
+				*getXDerivative(xold.getMagnitude(),xprev.getMagnitude());
+		expect += 0.5* 1/mass * getXsquaredDeriv(xold.getMagnitude(),xprev.getMagnitude());
+		expect += 0.5 * mass * angfreq * angfreq * xold.getMagnitude() * xold.getMagnitude();
 		double deltaTauDerivative = action.getDeltaTauDerivative(xold, xprev);
 		assertEquals(expect,deltaTauDerivative,1e-1);
 	}

@@ -11,10 +11,10 @@ public class Point {
     }
     
     public Displacement getDifference(Point point2) {
-        return new Displacement(x - point2.x);
+        return new Displacement(x - point2.getMagnitude());
     }
     
     public void move(Displacement delta) {
-        x += delta.x;
+        x += delta.getMagnitude();
     }
 }

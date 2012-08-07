@@ -21,8 +21,8 @@ public class PEEstimatorTest {
 		mass = 1.0;
 		angfreq = 1.0;
 		path = new Path(sliceCount, kT);
-		path.setPosition(1, 1);
-		path.setPosition(2,0.5);
+		path.setPosition(1, new Point(1));
+		path.setPosition(2, new Point(0.5));
 		deltaTau = path.getDeltaTau();
 		action = new ExactSHOAction(deltaTau, mass, angfreq);
 		potential = new PotentialEnergyEstimator(path, action, mass);
@@ -32,8 +32,8 @@ public class PEEstimatorTest {
 	public void testGetValue() {
 		double expect = 0;
 		for (int i = 0; i < sliceCount; i++) {
-    		double x = path.getPosition(i);
-    		double xnext = path.getPosition((i+1)%sliceCount);
+    		Point x = path.getPosition(i);
+    		Point xnext = path.getPosition((i+1)%sliceCount);
     		expect += action.getDeltaTauDerivative(xnext, x);
     		expect += mass * action.getMassDerivative(xnext, x) / deltaTau;
 		}
