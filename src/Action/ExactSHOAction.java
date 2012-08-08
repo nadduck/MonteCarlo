@@ -1,3 +1,4 @@
+
 public class ExactSHOAction implements Action {
 
 	private double mass;
