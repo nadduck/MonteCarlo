@@ -25,9 +25,10 @@ public class TotalEstimatorTest {
 	public void setUp() {
 		sliceCount = 3;
 		kT = 0.5;
-		path = new Path(sliceCount, kT);
-		path.setPosition(1, new Point1D(1));
-		path.setPosition(2,new Point1D(0.5));
+		GeometryFactory1D factory = new GeometryFactory1D();
+		path = new Path(sliceCount, kT, factory);
+		path.setPosition(1, factory .createNewPoint(new double [] {1.0}));
+		path.setPosition(2, factory.createNewPoint(new double [] {0.5}));
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
 		angfreq = 1.0;

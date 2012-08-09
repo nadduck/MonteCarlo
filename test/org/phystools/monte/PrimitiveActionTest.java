@@ -11,7 +11,7 @@ public class PrimitiveActionTest {
 
 	private double deltaTau;
 	private Point xold;
-	private Point1D xprev;
+	private Point xprev;
 	private Action action;
 	private double mass;
 
@@ -19,8 +19,9 @@ public class PrimitiveActionTest {
 	public void setUp() {
 		deltaTau = 0.1;
 		mass = 1.0;
-		xold = new Point1D(0.5);
-		xprev = new Point1D(0.3);
+		GeometryFactory factory = new GeometryFactory1D();
+		xold = factory.createNewPoint(new double [] {0.5});
+		xprev = factory.createNewPoint(new double [] {0.3});
 		action = new PrimitiveAction(deltaTau, mass);
 	}
 	

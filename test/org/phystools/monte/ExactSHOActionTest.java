@@ -4,8 +4,9 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.action.*;
+import org.phystools.monte.geometry.GeometryFactory;
+import org.phystools.monte.geometry.GeometryFactory1D;
 import org.phystools.monte.geometry.Point;
-import org.phystools.monte.geometry.Point1D;
 
 
 public class ExactSHOActionTest {
@@ -13,7 +14,7 @@ public class ExactSHOActionTest {
 	private double deltaTau;
 	private double mass;
 	private Point xold;
-	private Point1D xprev;
+	private Point xprev;
 	private double angfreq;
 	private Action action;
 	private double coshwt;
@@ -25,8 +26,9 @@ public class ExactSHOActionTest {
 		deltaTau = 0.1;
 		mass = 1.0;
 		angfreq = 1.0;
-		xold = new Point1D(0.5);
-		xprev = new Point1D(0.3);
+		GeometryFactory factory = new GeometryFactory1D();
+		xold = factory.createNewPoint(new double [] {0.5});
+		xprev = factory.createNewPoint(new double [] {0.3});
 		epsilon = 1e-6;
 		coshwt = Math.cosh(deltaTau*angfreq);
 		sinhwt = Math.sinh(deltaTau*angfreq);

@@ -10,7 +10,7 @@ public class Path {
     private double deltaTau;
     
     
-    public Path(int sliceCount, double kT) {
+    public Path(int sliceCount, double kT, GeometryFactory factory) {
         this.kT = kT;
         this.deltaTau = 1.0 / (kT * sliceCount);
         this.sliceCount = sliceCount;
@@ -18,7 +18,7 @@ public class Path {
         position = new Point[sliceCount];
     
         for (int i = 0; i < sliceCount; i++) {
-            position[i] = new Point1D(0);
+            position[i] = factory.createNewPoint();
         }
     }
 

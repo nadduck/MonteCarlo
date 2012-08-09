@@ -5,8 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.action.*;
 import org.phystools.monte.estimator.*;
-import org.phystools.monte.geometry.Point;
-import org.phystools.monte.geometry.Point1D;
+import org.phystools.monte.geometry.*;
 import org.phystools.monte.path.Path;
 
 
@@ -26,9 +25,10 @@ public class KEEstimatorTest {
 		sliceCount = 3;
 		kT = 0.5;
 		angfreq = 1.0;
-		path = new Path(sliceCount, kT);
-		path.setPosition(1, new Point1D(1));
-		path.setPosition(2,new Point1D(0.5));
+		GeometryFactory1D factory = new GeometryFactory1D();
+		path = new Path(sliceCount, kT, factory);
+        path.setPosition(1, factory .createNewPoint(new double [] {1.0}));
+		path.setPosition(2, factory.createNewPoint(new double [] {0.5}));
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
 		action = new ExactSHOAction(deltaTau, mass, angfreq);
