@@ -35,7 +35,8 @@ public class Advancer {
             
             double acceptanceProbability = Math.exp(-deltaS) / tprob;
             
-            if (rand.nextDouble() < acceptanceProbability && xnew.x > 0) {  
+            boolean didCrossNode = xnew.toArray()[0] <= 0;
+            if (rand.nextDouble() < acceptanceProbability && !didCrossNode) {  
                 path.setPosition(slice, xnew);
             }
         }

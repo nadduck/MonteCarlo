@@ -35,7 +35,7 @@ public class Measurer {
     	double sum = 0;
     	for (int i = 0; i < sliceCount; i++) {
             Point x = path.getPosition(i);
-            sum += x.x;
+            sum += x.toArray()[0];
         }
     	return sum/sliceCount;
     }

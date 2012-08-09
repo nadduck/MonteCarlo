@@ -34,17 +34,21 @@ public class ExactSHOActionTest {
 
 	@Test
 	public void testGetMassDerivative() {
-		double expect = -0.5 * 1/mass + getExponentialArg(xold.getMagnitude(),xprev.getMagnitude())/mass;
+		double expect = -0.5 * 1/mass 
+		        + getExponentialArg(xold.getMagnitude(),xprev.getMagnitude())/mass;
 		double massDerivative = action.getMassDerivative(xold, xprev);
 		assertEquals(expect,massDerivative,1e-14);
 	}
 	
 	@Test
 	public void testGetDeltaTauDerivative() {
-		double expect = -0.5* 1/mass * getXDerivative(xold.x,xprev.x)
-				*getXDerivative(xold.x,xprev.x);
-		expect += 0.5* 1/mass * getXsquaredDeriv(xold.x,xprev.x);
-		expect += 0.5 * mass * angfreq * angfreq * xold.x * xold.x;
+		double expect = -0.5* 1/mass 
+		        * getXDerivative(xold.toArray()[0], xprev.toArray()[0])
+				*getXDerivative(xold.toArray()[0], xprev.toArray()[0]);
+		expect += 0.5* 1/mass 
+		        * getXsquaredDeriv(xold.toArray()[0], xprev.toArray()[0]);
+		expect += 0.5 * mass * angfreq * angfreq 
+		        * xold.toArray()[0] * xold.toArray()[0];
 		double deltaTauDerivative = action.getDeltaTauDerivative(xold, xprev);
 		assertEquals(expect,deltaTauDerivative,1e-3);
 	}
@@ -65,7 +69,8 @@ public class ExactSHOActionTest {
 	}
 
 	private double getExponentialArg(double xold, double xprev) {
-		double expArg = mass*angfreq*((xold*xold+xprev*xprev)*coshwt - 2*xold*xprev)/(2*sinhwt);
+		double expArg = mass * angfreq *
+		        ((xold*xold+xprev*xprev)*coshwt - 2*xold*xprev)/(2*sinhwt);
 		return expArg;	
 	}
 }
