@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.action.*;
 import org.phystools.monte.geometry.Point;
+import org.phystools.monte.geometry.Point1D;
 
 
 public class ExactSHOActionTest {
@@ -12,7 +13,7 @@ public class ExactSHOActionTest {
 	private double deltaTau;
 	private double mass;
 	private Point xold;
-	private Point xprev;
+	private Point1D xprev;
 	private double angfreq;
 	private Action action;
 	private double coshwt;
@@ -24,8 +25,8 @@ public class ExactSHOActionTest {
 		deltaTau = 0.1;
 		mass = 1.0;
 		angfreq = 1.0;
-		xold = new Point(0.5);
-		xprev = new Point(0.3);
+		xold = new Point1D(0.5);
+		xprev = new Point1D(0.3);
 		epsilon = 1e-6;
 		coshwt = Math.cosh(deltaTau*angfreq);
 		sinhwt = Math.sinh(deltaTau*angfreq);

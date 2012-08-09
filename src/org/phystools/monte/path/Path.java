@@ -1,6 +1,6 @@
 package org.phystools.monte.path;
 
-import org.phystools.monte.geometry.Point;
+import org.phystools.monte.geometry.*;
 
 public class Path {
 
@@ -18,12 +18,12 @@ public class Path {
         position = new Point[sliceCount];
     
         for (int i = 0; i < sliceCount; i++) {
-            position[i] = new Point(0);
+            position[i] = new Point1D(0);
         }
     }
 
-    public void setPosition(int index, Point x) {
-        position[index] = x;
+    public void setPosition(int index, Point xnew) {
+        position[index] = xnew;
     }
 
     public Point getPosition(int index) {

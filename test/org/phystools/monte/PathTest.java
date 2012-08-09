@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.geometry.Point;
+import org.phystools.monte.geometry.Point1D;
 import org.phystools.monte.path.Path;
 
 
@@ -25,7 +26,7 @@ public class PathTest {
 	@Test
 	public void testGetAndSetPosition() {
 		int index = 3;
-		Point expect = new Point(0.42);
+		Point1D expect = new Point1D(0.42);
 		path.setPosition(index, expect);
 		Point testGetPosition = path.getPosition(index);
 		assertEquals(expect, testGetPosition);

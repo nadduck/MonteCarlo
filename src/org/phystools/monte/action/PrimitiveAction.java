@@ -44,8 +44,8 @@ public class PrimitiveAction implements Action{
         return deltaS;
 	}
 
-	private double getKinetic(Point xold, Point xprev) {
-		Displacement difference = xold.getDifference(xprev);
+	private double getKinetic(Point xold, Point point) {
+		Displacement difference = xold.getDifference(point);
 		return 0.5 * mass * difference.getMagnitude2() / deltaTau;
 	}
 	

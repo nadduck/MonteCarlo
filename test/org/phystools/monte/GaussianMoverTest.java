@@ -28,9 +28,9 @@ public class GaussianMoverTest {
         rand = new Random(42L);
         randCopy = new Random(42L);
         mover = new GaussianMover(rand, deltaTau, mass);
-        Point zero = new Point(0);
+        Point1D zero = new Point1D(0);
         segment = new PathSegment(zero,zero,zero);
-        segment.setNext(new Point(1.0));
+        segment.setNext(new Point1D(1.0));
         sigma2 = 0.5 * deltaTau / mass;
         sigma = Math.sqrt(sigma2);
     }

@@ -21,7 +21,7 @@ public class GaussianMover implements Mover {
     public Point sampleNewPosition(PathSegment segment) {
         Point xmid = segment.getMidpoint();
         
-        Point xnew = new Point(xmid);
+        Point xnew = new Point1D(xmid);
         Displacement delta = Displacement.newGuassianRand(sigma, rand);
         xnew.move(delta);
         

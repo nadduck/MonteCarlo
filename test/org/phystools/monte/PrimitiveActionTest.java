@@ -11,7 +11,7 @@ public class PrimitiveActionTest {
 
 	private double deltaTau;
 	private Point xold;
-	private Point xprev;
+	private Point1D xprev;
 	private Action action;
 	private double mass;
 
@@ -19,8 +19,8 @@ public class PrimitiveActionTest {
 	public void setUp() {
 		deltaTau = 0.1;
 		mass = 1.0;
-		xold = new Point(0.5);
-		xprev = new Point(0.3);
+		xold = new Point1D(0.5);
+		xprev = new Point1D(0.3);
 		action = new PrimitiveAction(deltaTau, mass);
 	}
 	
