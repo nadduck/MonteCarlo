@@ -8,7 +8,7 @@ public interface Point {
 
     public abstract Displacement getDifference(Point xmid);
 
-    public abstract void move(Displacement delta);
+    public abstract void move(Displacement displacement);
 
     public abstract double[] toArray();
 

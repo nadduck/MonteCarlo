@@ -1,52 +1,47 @@
-package org.phystools.monte;
+package org.phystools.monte.estimator;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.action.*;
-import org.phystools.monte.estimator.*;
 import org.phystools.monte.geometry.*;
 import org.phystools.monte.path.Path;
 
 
-public class KEEstimatorTest {
-
+public class TotalEstimatorTest {
 	private Path path;
 	private Action action;
 	private double deltaTau;
 	private double mass;
 	private int sliceCount;
 	private double kT;
+	private Estimator potential;
 	private Estimator kinetic;
+	private Estimator total;
 	private double angfreq;
 	
 	@Before
 	public void setUp() {
 		sliceCount = 3;
 		kT = 0.5;
-		angfreq = 1.0;
 		GeometryFactory1D factory = new GeometryFactory1D();
 		path = new Path(sliceCount, kT, factory);
-        path.setPosition(1, factory .createNewPoint(new double [] {1.0}));
+		path.setPosition(1, factory .createNewPoint(new double [] {1.0}));
 		path.setPosition(2, factory.createNewPoint(new double [] {0.5}));
 		deltaTau = path.getDeltaTau();
 		mass = 1.0;
+		angfreq = 1.0;
 		action = new ExactSHOAction(deltaTau, mass, angfreq);
 		kinetic = new KineticEnergyEstimator(path, action, mass);
+		potential = new PotentialEnergyEstimator(path, action, mass);		
+		total = new TotalEnergyEstimator(potential, kinetic);
 	}
-	
 	@Test
 	public void testGetValue() {
-		double expect = 0;
-    	for (int i = 0; i < sliceCount; i++) {
-    		Point x = path.getPosition(i);
-    		Point xnext = path.getPosition((i+1)%sliceCount);
-    		expect -= mass * action.getMassDerivative(x, xnext) / deltaTau;    		
-    	}
-    	expect /= sliceCount;
-		double kineticEnergy = kinetic.getValue();
-		assertEquals(expect, kineticEnergy,1e-14);
+		double expect = potential.getValue() + kinetic.getValue();
 		
+		double totalEnergy = total.getValue();
+		assertEquals(expect,totalEnergy,1e-14);
 	}
 
 }

@@ -6,8 +6,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.phystools.monte.action.Action;
 import org.phystools.monte.estimator.*;
-import org.phystools.monte.geometry.GeometryFactory;
-import org.phystools.monte.geometry.GeometryFactory1D;
+import org.phystools.monte.geometry.*;
 import org.phystools.monte.mover.*;
 import org.phystools.monte.path.Path;
 import org.xml.sax.SAXException;
@@ -40,6 +39,7 @@ public class QuantumMonte {
     	
 		double kT = simulationInfo.getkT();
         int sliceCount = simulationInfo.getSliceCount();
+        
         GeometryFactory factory = new GeometryFactory1D();
         Path path = new Path(sliceCount, kT, factory);
         

@@ -1,5 +1,6 @@
 package org.phystools.monte.geometry;
 public class Point1D implements Point {
+	
     private final double[] x = new double[1];
 
     public Point1D(double x) {
@@ -24,13 +25,13 @@ public class Point1D implements Point {
     }
 
     @Override
-    public Displacement getDifference(Point point2) {
-        return new Displacement(x[0] - point2.toArray()[0]);
+    public Displacement getDifference(Point point) {
+        return new Displacement1D(x[0] - point.toArray()[0]);
     }
     
     @Override
     public void move(Displacement delta) {
-        x[0] += delta.x;
+        x[0] += delta.toArray()[0];
     }
 
     @Override
@@ -44,7 +45,7 @@ public class Point1D implements Point {
     }
 
     @Override
-    public Point1D midpoint(Point p2) {
+    public Point midpoint(Point p2) {
         return new Point1D(0.5*(x[0] + p2.toArray()[0]));
     }
 }

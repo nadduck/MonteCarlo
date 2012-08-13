@@ -1,4 +1,4 @@
-package org.phystools.monte;
+package org.phystools.monte.mover;
 import static org.junit.Assert.*;
 
 import java.util.Random;
@@ -6,7 +6,6 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.geometry.*;
-import org.phystools.monte.mover.UniformMover;
 import org.phystools.monte.path.PathSegment;
 
 

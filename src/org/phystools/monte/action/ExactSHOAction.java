@@ -52,11 +52,11 @@ public class ExactSHOAction implements Action {
 		return deltaS;
 	}
 	
-	private double getExponentialArg(Point xold, Point point) {
+	private double getExponentialArg(Point xold, Point xprev) {
 		double xold2 = xold.getMagnitude2();
-		double xprev2 = point.getMagnitude2();
-		double expArg = mass*angfreq*((xold2+xprev2)*coshwt - 2*xold.dot(point))/(2*sinhwt);
-		return expArg;	
+		double xprev2 = xprev.getMagnitude2();
+		double expArg = mass*angfreq*((xold2+xprev2)*coshwt - 2*xold.dot(xprev))/(2*sinhwt);
+		return expArg;
 	}
 
 	@Override

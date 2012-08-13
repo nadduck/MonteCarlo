@@ -1,4 +1,4 @@
-package org.phystools.monte;
+package org.phystools.monte.mover;
 import static org.junit.Assert.*;
 
 import java.util.Random;
@@ -6,7 +6,6 @@ import java.util.Random;
 import org.junit.Before;
 import org.junit.Test;
 import org.phystools.monte.geometry.*;
-import org.phystools.monte.mover.*;
 import org.phystools.monte.path.PathSegment;
 
 public class GaussianMoverTest {
@@ -38,9 +37,9 @@ public class GaussianMoverTest {
 
     @Test
     public void testNewPosition() {
-        Displacement delta = Displacement.newGuassianRand(sigma, randCopy);
+        Displacement delta = new Displacement1D();
         Point expect = segment.getMidpoint();
-        expect.move(delta);
+        expect.move(delta.newGaussianRand(sigma, randCopy));
         Point actual = mover.sampleNewPosition(segment);
         assertArrayEquals(expect.toArray(), actual.toArray(), 1e-14);
     }

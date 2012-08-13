@@ -22,8 +22,9 @@ public class GaussianMover implements Mover {
         Point xmid = segment.getMidpoint();
         
         Point xnew = new Point1D(xmid);
-        Displacement delta = Displacement.newGuassianRand(sigma, rand);
-        xnew.move(delta);
+        Displacement delta = new Displacement1D();
+        		
+        xnew.move(delta.newGaussianRand(sigma, rand));
         
         tranProb = calculateTransitionProbability(xmid, xnew);
         

@@ -1,39 +1,19 @@
 package org.phystools.monte.geometry;
+
 import java.util.Random;
 
+public interface Displacement {
 
-public class Displacement {
+	public abstract Displacement newGaussianRand(double sigma, Random rand);
 
-    public double x;
-    
-    public Displacement() {
-    }
+	public abstract Displacement newUniformDisplacement(double delta,
+			Random rand);
 
-    Displacement(double x) {
-        this.x = x;
-    }
+	public abstract double getMagnitude();
 
-    public static Displacement newGuassianRand(double sigma, Random rand) {
-        Displacement delta = new Displacement();
-        delta.makeGaussianRandom(sigma, rand);
-        return delta;
-    }
+	public abstract void makeGaussianRandom(double sigma, Random rand);
 
-    public static Displacement newUniformDisplacement(double delta, Random rand) {
-        Displacement deltaDisplacement = 
-                new Displacement(delta * (2 * rand.nextDouble() - 1));
-        return deltaDisplacement;
-    }
+	public abstract double getMagnitude2();
 
-    public double getMagnitude() {
-        return Math.abs(x);
-    }
-   
-    public void makeGaussianRandom(double sigma, Random rand) {
-        x = sigma*rand.nextGaussian();
-    }
-
-    public double getMagnitude2() {
-        return x * x;
-    }
+	public abstract double[] toArray();
 }

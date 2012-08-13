@@ -1,9 +1,8 @@
-package org.phystools.monte;
+package org.phystools.monte.action;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.phystools.monte.action.*;
 import org.phystools.monte.geometry.*;
 
 
