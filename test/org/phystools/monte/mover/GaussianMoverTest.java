@@ -27,7 +27,7 @@ public class GaussianMoverTest {
         rand = new Random(42L);
         randCopy = new Random(42L);
         GeometryFactory factory = new GeometryFactory1D();
-        mover = new GaussianMover(rand, deltaTau, mass);
+        mover = new GaussianMover(rand, deltaTau, mass, factory);
         Point zero = factory.createNewPoint(new double [] {0.0});
         segment = new PathSegment(zero,zero,zero);
         segment.setNext(factory.createNewPoint(new double [] {1.0}));

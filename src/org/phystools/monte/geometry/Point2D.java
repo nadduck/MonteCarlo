@@ -1,17 +1,19 @@
 package org.phystools.monte.geometry;
 
 public class Point2D implements Point {
-	private double[] x = new double[2];
+	private final double[] x = new double[2];
 	
     public Point2D(double[] x) {
-        this.x = x;
+        this.x[0] = x[0];
+        this.x[1] = x[1];
     }
     
     public Point2D() {
     }
 
     public Point2D(Point point) {
-        this.x = point.toArray();
+        this.x[0] = point.toArray()[0];
+        this.x[1] = point.toArray()[1];
     }
     
 	@Override

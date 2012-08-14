@@ -10,9 +10,12 @@ public class GaussianMover implements Mover {
     private double sigma;
     private double sigma2;
     private double tranProb;
+    private GeometryFactory factory;
     
-    public GaussianMover(Random rand, double deltaTau, double mass) {
-        this.rand = rand;        
+    public GaussianMover(Random rand, double deltaTau, double mass, 
+            GeometryFactory factory) {
+        this.rand = rand;
+        this.factory = factory;
         sigma2 = 0.5 * deltaTau / mass;
         sigma = Math.sqrt(sigma2);
     }
@@ -21,8 +24,8 @@ public class GaussianMover implements Mover {
     public Point sampleNewPosition(PathSegment segment) {
         Point xmid = segment.getMidpoint();
         
-        Point xnew = new Point1D(xmid);
-        Displacement delta = new Displacement1D();
+        Point xnew = factory.createNewPoint(xmid);
+        Displacement delta = factory.createNewDisplacement();
         		
         xnew.move(delta.newGaussianRand(sigma, rand));
         

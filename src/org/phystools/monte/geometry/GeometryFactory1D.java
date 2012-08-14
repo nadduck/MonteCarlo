@@ -12,4 +12,19 @@ public class GeometryFactory1D implements GeometryFactory {
         return new Point1D(coord[0]);
     }
 
+    @Override
+    public Point createNewPoint(Point xmid) {
+        return new Point1D(xmid);
+    }
+
+    @Override
+    public Displacement createNewDisplacement() {
+        return new Displacement1D();
+    }
+
+    @Override
+    public int getSpaceDimension() {
+        return 1;
+    }
+
 }

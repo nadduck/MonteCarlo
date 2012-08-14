@@ -4,13 +4,14 @@ import java.util.Random;
 
 public class Displacement2D implements Displacement {
 
-	double[] x = new double[2];
+	private final double[] x = new double[2];
 	
 	public Displacement2D() {
 	}
 	
 	public Displacement2D(double[] x) {
-		this.x = x;
+		this.x[0] = x[0];
+        this.x[1] = x[1];
 	}
 
 	@Override

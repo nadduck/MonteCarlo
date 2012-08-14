@@ -40,7 +40,8 @@ public class QuantumMonte {
 		double kT = simulationInfo.getkT();
         int sliceCount = simulationInfo.getSliceCount();
         
-        GeometryFactory factory = new GeometryFactory1D();
+        int ndim = 2;
+        GeometryFactory factory = createGeometryFactory(ndim);
         Path path = new Path(sliceCount, kT, factory);
         
         double deltaTau = path.getDeltaTau();        
@@ -58,7 +59,7 @@ public class QuantumMonte {
 		
         Measurer measurer = new Measurer(path, total);
         
-        mover = new GaussianMover(rand, deltaTau, mass);
+        mover = new GaussianMover(rand, deltaTau, mass, factory);
         
         Advancer advancer = new Advancer(path, action, mover, rand);
     	
@@ -67,5 +68,22 @@ public class QuantumMonte {
 		DataManager dataManager = new DataManager(kT, angfreq, mass, action);
 		qmc.run(dataManager);
 	}
+
+
+    private static GeometryFactory createGeometryFactory(int n) {
+        GeometryFactory factory = null;
+        switch (n) {
+        case 1:
+            factory = new GeometryFactory1D();
+            break;
+        case 2:
+            factory = new GeometryFactory2D();
+            break;
+        case 3:
+            factory = new GeometryFactory3D();
+            break;
+        }
+        return factory;
+    }
 
 }
