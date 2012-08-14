@@ -15,7 +15,7 @@ public class Displacement1D implements Displacement {
 
     @Override
 	public Displacement newGaussianRand(double sigma, Random rand) {
-        Displacement1D delta = new Displacement1D();
+        Displacement delta = new Displacement1D();
         delta.makeGaussianRandom(sigma, rand);
         return delta;
     }

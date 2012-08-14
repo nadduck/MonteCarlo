@@ -6,14 +6,14 @@ public interface Point {
 
     public abstract double getMagnitude2();
 
-    public abstract Displacement getDifference(Point xmid);
+    public abstract Displacement getDifference(Point point);
 
-    public abstract void move(Displacement displacement);
+    public abstract void move(Displacement delta);
 
     public abstract double[] toArray();
 
     public abstract double dot(Point point);
 
-    public abstract Point midpoint(Point xnext);
+    public abstract Point midpoint(Point p2);
 
 }
