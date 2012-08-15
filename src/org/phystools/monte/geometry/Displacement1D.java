@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Displacement1D implements Displacement {
 
-    public double[] x = new double[1];
+    public final double[] x = new double[1];
     
     public Displacement1D() {
     }

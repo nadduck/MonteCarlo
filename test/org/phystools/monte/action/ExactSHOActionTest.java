@@ -19,19 +19,21 @@ public class ExactSHOActionTest {
 	private double coshwt;
 	private double sinhwt;
 	private double epsilon;
+	private int dimension;
 
 	@Before
 	public void setUp() {
 		deltaTau = 0.1;
 		mass = 1.0;
 		angfreq = 1.0;
+		dimension = 1;
 		GeometryFactory factory = new GeometryFactory1D();
 		xold = factory.createNewPoint(new double [] {0.5});
 		xprev = factory.createNewPoint(new double [] {0.3});
 		epsilon = 1e-6;
 		coshwt = Math.cosh(deltaTau*angfreq);
 		sinhwt = Math.sinh(deltaTau*angfreq);
-		action = new ExactSHOAction(deltaTau, mass, angfreq);
+		action = new ExactSHOAction(deltaTau, mass, angfreq, dimension);
 	}
 
 	@Test

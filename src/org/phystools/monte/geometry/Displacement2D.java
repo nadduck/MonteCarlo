@@ -24,9 +24,8 @@ public class Displacement2D implements Displacement {
 	@Override
 	public Displacement newUniformDisplacement(double delta, Random rand) {
 		double[] y = new double[2];
-		for(int i = 0; i < 2; i++) {
-			y[i] = delta * (2 * rand.nextDouble() - 1);
-		}
+		y[0] = delta * (2 * rand.nextDouble() - 1);
+		y[1] = delta * (2 * rand.nextDouble() - 1);
 		return new Displacement2D(y);
 	}
 
@@ -38,9 +37,8 @@ public class Displacement2D implements Displacement {
 
 	@Override
 	public void makeGaussianRandom(double sigma, Random rand) {
-		for(int i = 0; i < 2; i++) {
-			x[i] = sigma * rand.nextGaussian();
-		}
+		x[0] = sigma * rand.nextGaussian();
+		x[1] = sigma * rand.nextGaussian();
 	}
 
 	@Override

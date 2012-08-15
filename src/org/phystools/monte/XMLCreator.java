@@ -16,14 +16,16 @@ public class XMLCreator {
     private Double frequency;
     private Double mass;
     private Action action;
+    private Integer dimension;
     
     public XMLCreator() {
     	temperature = 0.5;
     	sliceCount = 20;
     	frequency = 1.0;
     	mass = 1.0;
+    	dimension = 1;
     	double deltaTau = 1/(temperature*sliceCount);
-		action = new ExactSHOAction(deltaTau , mass, frequency);
+		action = new ExactSHOAction(deltaTau , mass, frequency, dimension);
     }
     
     public XMLCreator(Double temperature, Integer sliceCount, 

@@ -13,8 +13,8 @@ public class GeometryFactory3D implements GeometryFactory {
 	}
 
     @Override
-    public Point createNewPoint(Point xmid) {
-        return new Point3D(xmid);
+    public Point createNewPoint(Point point) {
+        return new Point3D(point);
     }
 
     @Override

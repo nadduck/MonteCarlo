@@ -8,6 +8,7 @@ public class SimulationInfo {
     private double mass;
     private double angfreq;
     private Action action;
+    private int dimension;
 
     public double getkT() {
         return kT;
@@ -48,4 +49,12 @@ public class SimulationInfo {
     public void setAction(Action action) {
         this.action = action;
     }
+
+	public void setDimension(int dimension) {
+		this.dimension = dimension;
+	}
+	
+	public int getDimension() {
+		return dimension;
+	}
 }

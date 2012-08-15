@@ -7,15 +7,17 @@ public class ExactSHOAction implements Action {
 
 	private double mass;
 	private double angfreq;
+	private int ndim;
 	
 	private double sinhwt;
 	private double coshwt;
 	private double cothwt;
 	private double cschwt;
 	
-	public ExactSHOAction(double deltaTau, double mass, double angfreq) {
+	public ExactSHOAction(double deltaTau, double mass, double angfreq, int ndim) {
 		this.mass = mass;
 		this.angfreq = angfreq;
+		this.ndim = ndim;
 		
 		sinhwt = Math.sinh(deltaTau*angfreq);
 		coshwt = Math.cosh(deltaTau*angfreq);
@@ -27,14 +29,14 @@ public class ExactSHOAction implements Action {
 	public double getMassDerivative(Point xold, Point xprev) {
 		double expArg = getExponentialArg(xold, xprev);
 		
-		double dSdm = -0.5 * 1/mass + expArg/mass;
+		double dSdm = - ndim * 0.5 * 1/mass + expArg/mass;
 		return dSdm;
 	}
 
 	@Override
 	public double getDeltaTauDerivative(Point xold, Point xprev) { 
 		double angfreq2 = angfreq*angfreq;
-		double dSdtau = 0.5*angfreq*cothwt;
+		double dSdtau = ndim * 0.5 * angfreq * cothwt;
 		double xold2 = xold.getMagnitude2();
 		double xprev2 = xprev.getMagnitude2();
 		dSdtau -= 0.5*mass*angfreq2*cschwt*cschwt*(xold2+xprev2);

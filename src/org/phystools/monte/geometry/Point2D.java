@@ -1,6 +1,7 @@
 package org.phystools.monte.geometry;
 
 public class Point2D implements Point {
+	
 	private final double[] x = new double[2];
 	
     public Point2D(double[] x) {
@@ -31,17 +32,15 @@ public class Point2D implements Point {
 	@Override
 	public Displacement getDifference(Point point) {
 		double[] difference = new double[2];
-		for(int i = 0; i < 2; i++) {
-			difference[i] = x[i] - point.toArray()[i];
-		}
+		difference[0] = x[0] - point.toArray()[0];
+		difference[1] = x[1] - point.toArray()[1];
 		return new Displacement2D(difference);
 	}
 
 	@Override
 	public void move(Displacement delta) {
-		for(int i = 0; i < 2; i++) {
-			x[i] += delta.toArray()[i];
-		}
+		x[0] += delta.toArray()[0];
+		x[1] += delta.toArray()[1];
 	}
 
 	@Override
@@ -52,18 +51,16 @@ public class Point2D implements Point {
 	@Override
 	public double dot(Point point) {
 		double product = 0;
-		for(int i = 0; i < 2; i++) {
-			product += x[i]*point.toArray()[i];
-		}
+		product += x[0]*point.toArray()[0];
+		product += x[1]*point.toArray()[1];
 		return product;	
 	}
 
 	@Override
 	public Point midpoint(Point p2) {
 		double[] rmid = new double[2];
-		for(int i = 0; i < 2; i++) {
-			rmid[i] = 0.5 * (x[i]+p2.toArray()[i]);
-		}
+		rmid[0] = 0.5 * (x[0]+p2.toArray()[0]);
+		rmid[1] = 0.5 * (x[0]+p2.toArray()[1]);
 		return new Point2D(rmid);
 	}
 }

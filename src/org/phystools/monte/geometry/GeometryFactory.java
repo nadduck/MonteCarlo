@@ -6,7 +6,7 @@ public interface GeometryFactory {
 
     public Point createNewPoint(double[] coord);
 
-    public Point createNewPoint(Point xmid);
+    public Point createNewPoint(Point point);
 
     public Displacement createNewDisplacement();
 

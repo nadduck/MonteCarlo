@@ -40,7 +40,7 @@ public class QuantumMonte {
         double kT = simulationInfo.getkT();
         int sliceCount = simulationInfo.getSliceCount();
 
-        int ndim = 2;
+        int ndim = simulationInfo.getDimension();
         GeometryFactory factory = createGeometryFactory(ndim);
         Path path = new Path(sliceCount, kT, factory);
 
@@ -81,6 +81,9 @@ public class QuantumMonte {
         case 3:
             factory = new GeometryFactory3D();
             break;
+        case 4:
+        	factory = new GeometryFactory4D();
+        	break;
         }
         return factory;
     }

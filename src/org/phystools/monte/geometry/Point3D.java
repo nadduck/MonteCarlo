@@ -2,17 +2,21 @@ package org.phystools.monte.geometry;
 
 public class Point3D implements Point {
 
-	private double[] x = new double[3];
+	private final double[] x = new double[3];
 
 	public Point3D(double[] x) {
-		this.x = x;
+		this.x[0] = x[0];
+		this.x[1] = x[1];
+		this.x[2] = x[2];
 	}
 
 	public Point3D() {
 	}
 	
     public Point3D(Point point) {
-        this.x = point.toArray();
+        x[0] = point.toArray()[0];
+        x[1] = point.toArray()[1];
+        x[2] = point.toArray()[2];
     }
 
 	@Override
@@ -30,17 +34,17 @@ public class Point3D implements Point {
 	@Override
 	public Displacement getDifference(Point point) {
 		double[] difference = new double[3];
-		for(int i = 0; i < 3; i++) {
-			difference[i] = x[i] - point.toArray()[i];
-		}
+		difference[0] = x[0] - point.toArray()[0];
+		difference[1] = x[1] - point.toArray()[1];
+		difference[2] = x[2] - point.toArray()[2];
 		return new Displacement3D(difference);
 	}
 
 	@Override
 	public void move(Displacement delta) {
-		for(int i = 0; i < 3; i++) {
-			x[i] += delta.toArray()[i];
-		}
+		x[0] += delta.toArray()[0];
+		x[1] += delta.toArray()[1];
+		x[2] += delta.toArray()[2];
 	}
 
 	@Override
@@ -51,18 +55,18 @@ public class Point3D implements Point {
 	@Override
 	public double dot(Point point) {
 		double product = 0;
-		for(int i = 0; i < 3; i++) {
-			product += x[i]*point.toArray()[i];
-		}
+		product += x[0]*point.toArray()[0];
+		product += x[1]*point.toArray()[1];
+		product += x[2]*point.toArray()[2];
 		return product;	
 	}
 
 	@Override
 	public Point midpoint(Point p2) {
 		double[] rmid = new double[3];
-		for(int i = 0; i < 3; i++) {
-			rmid[i] = 0.5 * (x[i]+p2.toArray()[i]);
-		}
+		rmid[0] = 0.5 * (x[0]+p2.toArray()[0]);
+		rmid[1] = 0.5 * (x[1]+p2.toArray()[1]);
+		rmid[2] = 0.5 * (x[2]+p2.toArray()[2]);
 		return new Point3D(rmid);
 	}
 

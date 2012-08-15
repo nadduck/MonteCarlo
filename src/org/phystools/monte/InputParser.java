@@ -20,8 +20,9 @@ public class InputParser {
 	private double angfreq;
 	private double mass;
 	private double deltaTau;
-
-    public SimulationInfo parseXMLFromFile(String inputFileName) 
+	private int dimension;
+	private Action action;
+	public SimulationInfo parseXMLFromFile(String inputFileName) 
 	        throws ParserConfigurationException, SAXException, IOException {
         Document doc = getXMLDocumentFromFile(inputFileName);
 		
@@ -46,7 +47,8 @@ public class InputParser {
 		angfreq = getFrequency();
 		mass = getMass();
 		deltaTau = 1.0/(kT*sliceCount);
-		Action action = getAction();
+		dimension = getDimension();
+		action = getAction();
 		
 		SimulationInfo simulationInfo = new SimulationInfo();
 		simulationInfo.setkT(kT);
@@ -54,14 +56,19 @@ public class InputParser {
 		simulationInfo.setSliceCount(sliceCount);
 		simulationInfo.setMass(mass);
 		simulationInfo.setAction(action);
+		simulationInfo.setDimension(dimension);
 		
 		return simulationInfo;
     }
 
-    private Action getAction() {
+    private int getDimension() {
+		return getIntegerAttribute("Dimension","value");
+	}
+
+	private Action getAction() {
 		String name = getStringAttribute("Action", "name");
         if (name.equals("ExactSHOAction")) {
-            return new ExactSHOAction(deltaTau, mass, angfreq);
+            return new ExactSHOAction(deltaTau, mass, angfreq, dimension);
         } else if (name.equals("PrimitiveAction")) {
             return new PrimitiveAction(deltaTau, mass);
         }
