@@ -13,13 +13,15 @@ public class DataManager {
 	private double angfreq;
 	private double mass;
 	private Action action;
+	private int dimension;
     private static BufferedWriter out;
     
-    DataManager(double kT, double angfreq, double mass, Action action) {
-    	this.kT = kT;
-    	this.angfreq = angfreq;
-    	this.mass = mass;
-    	this.action = action;
+    DataManager(SimulationInfo simulationInfo) {
+    	kT = simulationInfo.getkT();
+    	angfreq = simulationInfo.getAngfreq();
+    	mass = simulationInfo.getMass();
+    	action = simulationInfo.getAction();
+    	dimension = simulationInfo.getDimension();
     }
     
     public void openOutputFile(String filename) throws IOException {
@@ -34,6 +36,8 @@ public class DataManager {
         out.write("# mass = " + mass);
         out.newLine();
         out.write("# action = " + action.getName());
+        out.newLine();
+        out.write("# dimension = " + dimension);
         out.newLine();
     }
     

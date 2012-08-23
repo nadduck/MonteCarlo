@@ -46,7 +46,6 @@ public class QuantumMonte {
 
         double deltaTau = path.getDeltaTau();
         double mass = simulationInfo.getMass();
-        double angfreq = simulationInfo.getAngfreq();
         Action action = simulationInfo.getAction();
 
         Random rand = new Random(2012L);
@@ -65,7 +64,7 @@ public class QuantumMonte {
 
         QuantumMonte qmc = new QuantumMonte(advancer, measurer);
 
-        DataManager dataManager = new DataManager(kT, angfreq, mass, action);
+        DataManager dataManager = new DataManager(simulationInfo);
         qmc.run(dataManager);
     }
 

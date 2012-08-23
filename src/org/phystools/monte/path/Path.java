@@ -42,4 +42,15 @@ public class Path {
         return deltaTau;
     }
 
+    public double getPathArea() {
+    	double area = 0;
+    	for(int i = 0; i < sliceCount; i++) {
+    		double x1 = position[i].toArray()[0];
+    		double y1 = position[i].toArray()[1];
+    		double x2 = position[(i+1)%sliceCount].toArray()[0];
+    		double y2 = position[(i+1)%sliceCount].toArray()[1];
+    		area += 0.5 * (x1*y2 - x2*y1);
+    	}
+    	return area;
+    }
 }
