@@ -23,7 +23,9 @@ public class Measurer {
         double avgx = calculateAvgX();      
         double xsquared = calculateXSquared();
         double E = total.getValue();
-        dataManager.writeData(j,avgx,xsquared,E);
+        double B = 10.0;
+        double cosphi = Math.cos(B*path.getPathArea());
+        dataManager.writeData(j,avgx,xsquared,E, cosphi);
     }
     
     private double calculateXSquared() {
