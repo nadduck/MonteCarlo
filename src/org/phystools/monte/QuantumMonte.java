@@ -47,8 +47,9 @@ public class QuantumMonte {
         double deltaTau = path.getDeltaTau();
         double mass = simulationInfo.getMass();
         Action action = simulationInfo.getAction();
+        double magneticfield = simulationInfo.getMagneticField();
 
-        Random rand = new Random(2012L);
+        Random rand = new Random(5000L);
         double delta = 1.0;
         Mover mover = new UniformMover(rand, delta);
 
@@ -56,7 +57,7 @@ public class QuantumMonte {
         Estimator kinetic = new KineticEnergyEstimator(path, action, mass);
         Estimator total = new TotalEnergyEstimator(potential, kinetic);
 
-        Measurer measurer = new Measurer(path, total);
+        Measurer measurer = new Measurer(path, total, magneticfield);
 
         mover = new GaussianMover(rand, deltaTau, mass, factory);
 

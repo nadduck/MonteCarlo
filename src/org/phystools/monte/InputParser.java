@@ -22,6 +22,7 @@ public class InputParser {
 	private double deltaTau;
 	private int dimension;
 	private Action action;
+	private double magneticfield;
 	public SimulationInfo parseXMLFromFile(String inputFileName) 
 	        throws ParserConfigurationException, SAXException, IOException {
         Document doc = getXMLDocumentFromFile(inputFileName);
@@ -49,6 +50,7 @@ public class InputParser {
 		deltaTau = 1.0/(kT*sliceCount);
 		dimension = getDimension();
 		action = getAction();
+		magneticfield = getMagneticField();
 		
 		SimulationInfo simulationInfo = new SimulationInfo();
 		simulationInfo.setkT(kT);
@@ -57,11 +59,16 @@ public class InputParser {
 		simulationInfo.setMass(mass);
 		simulationInfo.setAction(action);
 		simulationInfo.setDimension(dimension);
+		simulationInfo.setMagneticField(magneticfield);
 		
 		return simulationInfo;
     }
 
-    private int getDimension() {
+    private double getMagneticField() {
+    	return getDoubleAttribute("MagneticField", "value");
+	}
+
+	private int getDimension() {
 		return getIntegerAttribute("Dimension","value");
 	}
 

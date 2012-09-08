@@ -11,11 +11,12 @@ public class Measurer {
 	private Estimator total;
 	
 	private int sliceCount;
+	private double magneticfield;
 	
-	Measurer(Path path, Estimator total) {
+	Measurer(Path path, Estimator total, double magneticfield) {
 		this.path = path;
 		this.total = total;
-		
+		this.magneticfield = magneticfield;
 		sliceCount = path.getSliceCount();
 	}
 	
@@ -23,8 +24,7 @@ public class Measurer {
         double avgx = calculateAvgX();      
         double xsquared = calculateXSquared();
         double E = total.getValue();
-        double B = 10.0;
-        double cosphi = Math.cos(B*path.getPathArea());
+        double cosphi = Math.cos(magneticfield*path.getPathArea());
         dataManager.writeData(j,avgx,xsquared,E, cosphi);
     }
     

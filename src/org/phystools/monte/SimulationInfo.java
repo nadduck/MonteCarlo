@@ -9,6 +9,7 @@ public class SimulationInfo {
     private double angfreq;
     private Action action;
     private int dimension;
+	private double magneticfield;
 
     public double getkT() {
         return kT;
@@ -56,5 +57,13 @@ public class SimulationInfo {
 	
 	public int getDimension() {
 		return dimension;
+	}
+
+	public void setMagneticField(double magneticfield) {
+		this.magneticfield = magneticfield;		
+	}
+	
+	public double getMagneticField() {
+		return magneticfield;
 	}
 }
